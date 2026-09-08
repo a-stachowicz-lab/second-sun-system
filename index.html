@@ -280,65 +280,181 @@ nav {
 }
 
 /* ---------------------------------------------------------
-   BRAND OBJECT
+   BRAND OBJECT — FULL LOGO, NO CROPPING
    --------------------------------------------------------- */
 
 .brand-hero {
     position: relative;
 
-    width: min(650px, 100%);
-    height: 315px;
+    width: min(720px, 100%);
+    height: 335px;
 
-    margin: 0 auto 4px;
+    margin: 0 auto 0;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    overflow: hidden;
+    /*
+       IMPORTANT:
+       The logo must never be clipped by the hero container.
+    */
+    overflow: visible;
 }
-
-/*
-   The logo is intentionally not placed inside a card.
-   The radial background and mask make the original artwork
-   dissolve into the surrounding field.
-*/
 
 .brand-symbol {
     position: relative;
 
-    width: 355px;
-    height: 190px;
+    width: 430px;
+    height: 225px;
 
-    margin-top: 4px;
+    margin-top: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     z-index: 3;
+
+    overflow: visible;
 }
 
 .brand-symbol::before {
     content: "";
 
     position: absolute;
-    inset: -25px -45px;
+
+    inset: -35px -70px;
 
     background:
         radial-gradient(
             ellipse at center,
-            rgba(0, 40, 70, 0.35),
-            rgba(0, 10, 18, 0.14) 48%,
-            transparent 73%
+            rgba(0, 55, 90, 0.24),
+            rgba(0, 15, 25, 0.10) 48%,
+            transparent 75%
         );
 
-    filter: blur(10px);
+    filter: blur(18px);
 
     z-index: -1;
 }
 
 .brand-symbol img {
+    /*
+       Do NOT force a fixed height.
+       Preserve the complete natural aspect ratio.
+    */
+
+    width: auto;
+    height: auto;
+
+    max-width: 430px;
+    max-height: 225px;
+
+    object-fit: contain;
+    object-position: center center;
+
+    display: block;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    filter:
+        drop-shadow(0 0 13px rgba(0, 190, 255, 0.13))
+        drop-shadow(0 0 28px rgba(85, 95, 255, 0.08));
+
+    opacity: 0.98;
+}
+
+
+/* ---------------------------------------------------------
+   HORIZON
+   --------------------------------------------------------- */
+
+.brand-horizon {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: 244px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(0, 229, 255, 0.025) 12%,
+            rgba(0, 229, 255, 0.42) 50%,
+            rgba(0, 229, 255, 0.025) 88%,
+            transparent 100%
+        );
+
+    box-shadow:
+        0 0 11px rgba(0, 220, 255, 0.16),
+        0 0 34px rgba(0, 180, 255, 0.06);
+
+    z-index: 4;
+}
+
+
+/* ---------------------------------------------------------
+   REFLECTION
+   --------------------------------------------------------- */
+
+.brand-reflection {
+    position: absolute;
+
+    top: 247px;
+    left: 50%;
+
+    width: 285px;
+    height: 78px;
+
+    transform:
+        translateX(-50%)
+        scaleY(-1);
+
+    transform-origin: center top;
+
+    opacity: 0.20;
+
+    overflow: hidden;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.9),
+            rgba(0,0,0,0.38) 38%,
+            transparent 92%
+        );
+
+    -webkit-mask-image:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.9),
+            rgba(0,0,0,0.38) 38%,
+            transparent 92%
+        );
+
+    z-index: 2;
+}
+
+.brand-reflection img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    filter:
+        blur(1.1px)
+        saturate(0.72);
+
+    opacity: 0.72;
+} 
     width: 355px;
     height: auto;
 
