@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +7,21 @@
 <title>SECOND SUN — The White-Box System</title>
 
 <meta name="description"
-content="SECOND SUN — deterministic, domain-agnostic system architecture for validation, conflict detection and operational-state evaluation.">
+content="SECOND SUN is an independent deterministic system architecture for structured validation, conflict detection and operational-state evaluation.">
 
 <style>
+
 :root {
-    --bg: #050a10;
-    --bg-soft: #08111a;
-    --panel: rgba(10, 20, 30, 0.82);
-    --panel-strong: rgba(13, 25, 37, 0.96);
-
-    --text: #d8e1eb;
-    --muted: #7d8da0;
-    --faint: #435264;
-
-    --cyan: #45e6ed;
-    --cyan-soft: rgba(69, 230, 237, .16);
-
-    --green: #42d99b;
-    --green-soft: rgba(66, 217, 155, .14);
-
-    --violet: #bca6ff;
-    --violet-soft: rgba(188, 166, 255, .13);
-
-    --red: #ff6478;
-    --yellow: #e8c86b;
-
-    --line: rgba(125, 160, 190, .16);
-
-    --radius: 18px;
-    --max: 1180px;
+    --black: #020408;
+    --black2: #050a10;
+    --cyan: #00e8f0;
+    --blue: #247cff;
+    --violet: #a66cff;
+    --white: #e8edf5;
+    --silver: #aab5c4;
+    --muted: #718096;
+    --line: rgba(130,160,200,.15);
+    --glass: rgba(7,13,21,.72);
 }
 
 * {
@@ -49,576 +35,930 @@ html {
 body {
     margin: 0;
     background:
-        radial-gradient(circle at 50% 0%, rgba(69,230,237,.07), transparent 34%),
-        radial-gradient(circle at 85% 35%, rgba(188,166,255,.045), transparent 30%),
-        var(--bg);
-    color: var(--text);
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(36,124,255,.09),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 50% 75%,
+            rgba(166,108,255,.045),
+            transparent 42%
+        ),
+        var(--black);
+    color: var(--white);
     font-family:
         Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
         "Segoe UI",
+        Helvetica,
+        Arial,
         sans-serif;
-    line-height: 1.65;
+    line-height: 1.7;
 }
 
-/* =========================
+/* =========================================
    GLOBAL
-========================= */
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
+========================================= */
 
 .container {
-    width: min(calc(100% - 48px), var(--max));
-    margin: auto;
-}
-
-.eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    padding: 7px 12px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    color: var(--cyan);
-    background: rgba(69,230,237,.045);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-}
-
-.eyebrow::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 12px rgba(66,217,155,.8);
-}
-
-h1, h2, h3 {
-    margin-top: 0;
+    width: min(1160px, calc(100% - 48px));
+    margin: 0 auto;
 }
 
 section {
     padding: 110px 0;
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+.label {
+    color: var(--cyan);
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+}
 
-.nav {
-    position: sticky;
-    top: 0;
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.gradient-text {
+    background:
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            var(--blue),
+            var(--violet)
+        );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+nav {
+    position: fixed;
     z-index: 100;
-    border-bottom: 1px solid rgba(125,160,190,.1);
-    background: rgba(5,10,16,.78);
+    top: 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(130,160,200,.09);
+    background: rgba(2,4,8,.68);
     backdrop-filter: blur(18px);
 }
 
 .nav-inner {
-    min-height: 70px;
+    height: 72px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 }
 
-.brand {
+.nav-brand {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: .22em;
+    gap: 13px;
+
+    color: #d9e0e9;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .25em;
 }
 
-.brand-mark {
-    width: 28px;
-    height: 28px;
-    border: 1px solid rgba(69,230,237,.65);
-    border-radius: 50%;
+.nav-symbol {
+    width: 29px;
+    height: 29px;
+
     display: grid;
     place-items: center;
+
+    border: 1px solid rgba(0,232,240,.6);
+    border-radius: 50%;
+
     color: var(--cyan);
-    font-size: 12px;
-    box-shadow: 0 0 18px rgba(69,230,237,.12);
+
+    box-shadow:
+        0 0 18px rgba(0,232,240,.14);
 }
 
 .nav-links {
     display: flex;
     gap: 30px;
-    color: var(--muted);
-    font-size: 12px;
-    letter-spacing: .08em;
+
+    color: #69788a;
+
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
 }
 
 .nav-links a {
-    transition: color .2s ease;
+    transition: color .25s ease;
 }
 
 .nav-links a:hover {
     color: var(--cyan);
 }
 
-/* =========================
+/* =========================================
    HERO
-========================= */
+========================================= */
 
 .hero {
-    min-height: 88vh;
+    min-height: 100vh;
+
     display: flex;
     align-items: center;
+    justify-content: center;
+
     position: relative;
     overflow: hidden;
+
+    padding-top: 72px;
 }
 
 .hero::before {
     content: "";
+
     position: absolute;
-    width: 620px;
-    height: 620px;
-    border-radius: 50%;
+
+    width: 900px;
+    height: 900px;
+
     left: 50%;
-    top: 40%;
+    top: 48%;
+
     transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
     background:
         radial-gradient(
             circle,
-            rgba(69,230,237,.065),
-            transparent 64%
+            rgba(0,232,240,.035),
+            transparent 55%
         );
+
     pointer-events: none;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
-    text-align: center;
+
     width: 100%;
+
+    text-align: center;
 }
 
-.logo-placeholder {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 34px;
+/* =========================================
+   LOGO
+========================================= */
+
+.logo-frame {
+    width: min(280px, 65vw);
+    margin: 0 auto 30px;
+
+    position: relative;
+
     border-radius: 50%;
-    border: 1px solid rgba(69,230,237,.5);
-    display: grid;
-    place-items: center;
+}
+
+.logo-frame img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    filter:
+        drop-shadow(0 0 22px rgba(0,232,240,.12))
+        drop-shadow(0 0 25px rgba(166,108,255,.10));
+}
+
+/*
+   Falls das Bild nicht gefunden wird,
+   bleibt das technische Ersatzsymbol sichtbar.
+*/
+
+.logo-fallback {
+    display: none;
+
+    width: 170px;
+    height: 170px;
+
+    margin: auto;
+
+    border: 1px solid rgba(0,232,240,.55);
+    border-radius: 50%;
+
+    align-items: center;
+    justify-content: center;
+
     color: var(--cyan);
-    font-size: 22px;
-    letter-spacing: -.12em;
+
+    font-family: Georgia, serif;
+    font-size: 34px;
+
     box-shadow:
-        0 0 35px rgba(69,230,237,.08),
-        inset 0 0 25px rgba(69,230,237,.04);
+        0 0 35px rgba(0,232,240,.12);
 }
 
 .hero h1 {
-    margin-bottom: 12px;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(48px, 8vw, 94px);
-    line-height: .95;
-    letter-spacing: .07em;
-    color: var(--violet);
-    text-shadow: 0 0 28px rgba(188,166,255,.09);
+
+    font-size: clamp(52px, 8vw, 96px);
+
+    font-weight: 400;
+
+    letter-spacing: .08em;
+
+    line-height: 1;
+
+    color: #ddd2ff;
+
+    text-shadow:
+        0 0 35px rgba(166,108,255,.10);
 }
 
 .hero-subtitle {
-    margin-bottom: 36px;
-    color: #7e91a8;
-    font-family: Georgia, serif;
-    font-size: clamp(14px, 2vw, 19px);
+    margin-top: 18px;
+
+    color: #8d9bad;
+
+    font-family: "Courier New", monospace;
+
+    font-size: clamp(12px, 2vw, 18px);
+
     letter-spacing: .42em;
+
     text-transform: uppercase;
 }
 
-.statement {
+/* =========================================
+   HERO STATEMENT
+========================================= */
+
+.hero-statement {
     max-width: 760px;
-    margin: 0 auto 36px;
-    padding: 25px 30px;
+
+    margin: 46px auto 0;
+
+    padding: 27px 30px;
+
     text-align: left;
-    border-left: 2px solid var(--green);
-    background: linear-gradient(
-        90deg,
-        rgba(66,217,155,.055),
-        transparent
-    );
-    color: #aebdca;
+
+    border-left:
+        2px solid var(--cyan);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,232,240,.045),
+            transparent
+        );
+
+    color: #9aa9b9;
+
     font-family: Georgia, serif;
+
     font-size: 16px;
 }
 
-.statement strong {
-    color: var(--green);
+.hero-statement strong {
+    color: var(--cyan);
+    font-weight: 500;
 }
 
 .hero-tags {
     display: flex;
+
     justify-content: center;
     flex-wrap: wrap;
+
     gap: 12px 34px;
+
+    margin-top: 34px;
 }
 
 .hero-tags span {
-    color: #6d8094;
-    font-size: 11px;
+    color: #637387;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 10px;
+
     letter-spacing: .2em;
+
     text-transform: uppercase;
 }
 
 .hero-tags span::before {
     content: "◆";
+
     margin-right: 8px;
-    color: var(--green);
-    font-size: 7px;
+
+    color: var(--cyan);
+
+    font-size: 6px;
 }
 
-/* =========================
-   SECTION HEADERS
-========================= */
+/* =========================================
+   WATER / REFLECTION EFFECT
+========================================= */
+
+.reflection {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 0;
+
+    height: 170px;
+
+    overflow: hidden;
+
+    opacity: .72;
+
+    pointer-events: none;
+}
+
+.reflection::before {
+    content: "";
+
+    position: absolute;
+
+    top: 12px;
+    left: 50%;
+
+    width: 75%;
+    height: 1px;
+
+    transform: translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--cyan),
+            var(--blue),
+            var(--violet),
+            transparent
+        );
+
+    box-shadow:
+        0 0 16px rgba(0,232,240,.7);
+}
+
+.wave {
+    position: absolute;
+
+    left: 50%;
+
+    width: 680px;
+    height: 150px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(0,232,240,.12);
+
+    box-shadow:
+        0 0 0 18px rgba(36,124,255,.025),
+        0 0 0 38px rgba(166,108,255,.02),
+        0 0 0 60px rgba(0,232,240,.018);
+}
+
+.wave:nth-child(2) {
+    width: 480px;
+    height: 100px;
+    top: 25px;
+}
+
+.wave:nth-child(3) {
+    width: 300px;
+    height: 65px;
+    top: 42px;
+}
+
+/* =========================================
+   SECTION HEADER
+========================================= */
 
 .section-header {
     max-width: 760px;
-    margin-bottom: 55px;
+    margin-bottom: 52px;
 }
 
 .section-header h2 {
-    margin: 18px 0 14px;
+    margin-top: 15px;
+
     font-family: Georgia, serif;
-    font-size: clamp(32px, 5vw, 52px);
-    line-height: 1.05;
+
+    font-size: clamp(34px, 5vw, 55px);
+
     font-weight: 400;
-    color: #dce5ee;
+
+    line-height: 1.08;
+
+    color: #e0e6ee;
 }
 
 .section-header p {
-    margin: 0;
+    margin-top: 18px;
+
     color: var(--muted);
+
     font-size: 15px;
 }
 
-/* =========================
-   CORE CARDS
-========================= */
+/* =========================================
+   SYSTEM CARDS
+========================================= */
 
-.core-grid {
+.system-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
     gap: 18px;
 }
 
-.card {
+.system-card {
     position: relative;
-    padding: 30px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+
+    padding: 32px;
+
+    min-height: 230px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 16px;
+
     background:
         linear-gradient(
             145deg,
-            rgba(15,28,41,.9),
-            rgba(7,14,22,.85)
+            rgba(10,19,29,.84),
+            rgba(3,8,13,.78)
         );
-    box-shadow: 0 18px 50px rgba(0,0,0,.18);
-    overflow: hidden;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease;
 }
 
-.card::after {
+.system-card:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(0,232,240,.3);
+}
+
+.system-card::before {
     content: "";
+
     position: absolute;
-    left: 0;
+
     top: 0;
-    width: 70px;
+    left: 28px;
+
+    width: 50px;
     height: 1px;
-    background: var(--cyan);
-    opacity: .65;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            var(--violet)
+        );
 }
 
 .card-number {
     color: var(--cyan);
-    font-family: monospace;
-    font-size: 12px;
-    letter-spacing: .14em;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 10px;
+
+    letter-spacing: .18em;
 }
 
-.card h3 {
-    margin: 18px 0 8px;
-    color: #e3eaf1;
+.system-card h3 {
+    margin-top: 18px;
+
+    color: #dce4ed;
+
     font-size: 20px;
+
+    font-weight: 500;
 }
 
-.card p {
-    margin: 0;
-    color: var(--muted);
+.system-card p {
+    margin-top: 10px;
+
+    color: #728296;
+
     font-size: 14px;
 }
 
-/* =========================
-   ARCHITECTURE
-========================= */
+/* =========================================
+   CORE PRINCIPLE
+========================================= */
 
-.architecture {
+.principle {
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
+
     background:
         radial-gradient(
-            circle at 50% 50%,
-            rgba(188,166,255,.045),
-            transparent 55%
+            ellipse at center,
+            rgba(36,124,255,.045),
+            transparent 65%
         );
 }
 
-.architecture-box {
-    padding: 48px;
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    background: rgba(7,14,22,.7);
+.principle-box {
+    max-width: 920px;
+
+    margin: auto;
+
+    text-align: center;
 }
 
-.formula {
-    padding: 28px;
-    margin-bottom: 35px;
-    border: 1px solid rgba(69,230,237,.16);
-    border-radius: 14px;
-    background: rgba(69,230,237,.025);
-    text-align: center;
-    font-family: "Courier New", monospace;
-    font-size: clamp(16px, 3vw, 25px);
+.principle-box h2 {
+    margin-top: 18px;
+
+    font-family: Georgia, serif;
+
+    font-size: clamp(32px, 5vw, 58px);
+
+    font-weight: 400;
+
+    line-height: 1.08;
+}
+
+.principle-box p {
+    max-width: 700px;
+
+    margin: 25px auto 0;
+
+    color: #7d8da0;
+
+    font-size: 15px;
+}
+
+.principle-box strong {
     color: var(--cyan);
-    letter-spacing: .05em;
+
+    font-weight: 500;
 }
 
-.layers {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-}
-
-.layer {
-    padding: 18px 12px;
-    text-align: center;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: rgba(255,255,255,.018);
-}
-
-.layer small {
-    display: block;
-    margin-bottom: 5px;
-    color: var(--green);
-    font-family: monospace;
-    font-size: 11px;
-}
-
-.layer span {
-    color: #aab8c6;
-    font-size: 12px;
-}
-
-/* =========================
+/* =========================================
    CASE LIBRARY
-========================= */
+========================================= */
+
+.case-section {
+    position: relative;
+}
 
 .case-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
 }
 
 .case {
-    min-height: 300px;
-    padding: 32px;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    background: var(--panel);
-    transition:
-        transform .25s ease,
-        border-color .25s ease,
-        background .25s ease;
+    padding: 30px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 16px;
+
+    background:
+        rgba(6,12,19,.72);
 }
 
-.case:hover {
-    transform: translateY(-5px);
-    border-color: rgba(69,230,237,.35);
-    background: var(--panel-strong);
-}
-
-.case-head {
+.case-top {
     display: flex;
-    align-items: center;
+
     justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 30px;
+
+    align-items: center;
 }
 
 .case-id {
     color: var(--cyan);
-    font-family: monospace;
-    font-size: 12px;
-    letter-spacing: .14em;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 10px;
+
+    letter-spacing: .16em;
 }
 
-.case-status {
-    padding: 5px 9px;
-    border-radius: 999px;
-    color: var(--green);
-    border: 1px solid rgba(66,217,155,.22);
-    background: var(--green-soft);
-    font-family: monospace;
-    font-size: 10px;
+.case-state {
+    color: var(--green, #42d99b);
+
+    font-family: "Courier New", monospace;
+
+    font-size: 9px;
+
     letter-spacing: .12em;
+
+    padding: 5px 9px;
+
+    border: 1px solid rgba(66,217,155,.2);
+
+    border-radius: 20px;
 }
 
 .case h3 {
-    margin-bottom: 10px;
-    font-size: 23px;
+    margin-top: 24px;
+
+    color: #dce4ed;
+
+    font-size: 21px;
+
     font-weight: 500;
 }
 
 .case p {
-    margin: 0;
-    color: var(--muted);
+    margin-top: 10px;
+
+    color: #718195;
+
     font-size: 14px;
 }
 
-.case-tags {
+.case-meta {
     display: flex;
+
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 26px;
+
+    gap: 7px;
+
+    margin-top: 24px;
 }
 
-.case-tags span {
-    padding: 5px 9px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    color: #73879b;
-    font-family: monospace;
-    font-size: 10px;
+.case-meta span {
+    padding: 5px 8px;
+
+    border:
+        1px solid rgba(130,160,200,.12);
+
+    border-radius: 5px;
+
+    color: #647488;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 9px;
+
+    letter-spacing: .08em;
 }
 
-/* =========================
+/* =========================================
    POSITIONING
-========================= */
+========================================= */
 
-.positioning-grid {
+.position-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap: 20px;
 }
 
-.positioning-card {
-    padding: 36px;
-    border-radius: 18px;
-    border: 1px solid var(--line);
+.position-card {
+    padding: 35px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 16px;
+
+    background:
+        var(--glass);
 }
 
-.positioning-card.good {
-    border-color: rgba(66,217,155,.22);
-    background: linear-gradient(
-        145deg,
-        rgba(66,217,155,.055),
-        rgba(8,17,26,.7)
-    );
+.position-card.primary {
+    border-color:
+        rgba(0,232,240,.18);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,232,240,.045),
+            rgba(4,10,16,.8)
+        );
 }
 
-.positioning-card h3 {
-    margin-bottom: 24px;
-    color: var(--green);
+.position-card h3 {
+    margin-bottom: 23px;
+
+    color: var(--cyan);
+
+    font-size: 18px;
+
+    font-weight: 500;
 }
 
-.positioning-card ul {
+.position-card ul {
+    list-style: none;
+
     margin: 0;
     padding: 0;
-    list-style: none;
 }
 
-.positioning-card li {
-    position: relative;
-    padding: 10px 0 10px 22px;
-    color: #a4b2bf;
-    border-bottom: 1px solid rgba(125,160,190,.08);
+.position-card li {
+    padding: 9px 0;
+
+    border-bottom:
+        1px solid rgba(130,160,200,.07);
+
+    color: #8493a4;
+
     font-size: 14px;
 }
 
-.positioning-card li::before {
+.position-card li::before {
     content: "→";
-    position: absolute;
-    left: 0;
-    color: var(--cyan);
+
+    margin-right: 10px;
+
+    color: var(--blue);
 }
 
-/* =========================
-   PRINCIPLE
-========================= */
+/* =========================================
+   IP PROTECTION
+========================================= */
 
-.principle {
+.ip-section {
+    padding-top: 40px;
+}
+
+.ip-box {
+    max-width: 900px;
+
+    margin: auto;
+
+    padding: 35px;
+
+    border:
+        1px solid rgba(166,108,255,.16);
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(166,108,255,.035),
+            rgba(4,9,15,.7)
+        );
+}
+
+.ip-box h3 {
+    color: #c0aaff;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 12px;
+
+    letter-spacing: .18em;
+
+    text-transform: uppercase;
+}
+
+.ip-box p {
+    margin-top: 12px;
+
+    color: #718195;
+
+    font-size: 13px;
+}
+
+/* =========================================
+   CONTACT
+========================================= */
+
+.contact {
     text-align: center;
 }
 
-.principle-box {
-    max-width: 900px;
+.contact-box {
+    max-width: 800px;
+
     margin: auto;
-    padding: 65px 40px;
-    border-top: 1px solid rgba(188,166,255,.22);
-    border-bottom: 1px solid rgba(188,166,255,.22);
 }
 
-.principle-box h2 {
-    margin-bottom: 25px;
+.contact-box h2 {
     font-family: Georgia, serif;
-    font-size: clamp(30px, 5vw, 52px);
+
+    font-size: clamp(34px, 5vw, 55px);
+
     font-weight: 400;
-    color: var(--violet);
 }
 
-.principle-box p {
-    margin: 0;
-    color: #8799ab;
-    font-size: 16px;
+.contact-box p {
+    max-width: 620px;
+
+    margin: 20px auto;
+
+    color: #77879a;
+
+    font-size: 14px;
 }
 
-.principle-box strong {
-    color: var(--green);
+.contact-link {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 13px 22px;
+
+    border:
+        1px solid rgba(0,232,240,.3);
+
+    border-radius: 5px;
+
+    color: var(--cyan);
+
+    font-family: "Courier New", monospace;
+
+    font-size: 11px;
+
+    letter-spacing: .14em;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease;
 }
 
-/* =========================
+.contact-link:hover {
+    background:
+        rgba(0,232,240,.07);
+
+    border-color:
+        rgba(0,232,240,.6);
+}
+
+/* =========================================
    FOOTER
-========================= */
+========================================= */
 
 footer {
-    padding: 45px 0;
-    border-top: 1px solid var(--line);
-    color: #536477;
+    border-top:
+        1px solid var(--line);
+
+    padding: 38px 0;
 }
 
 .footer-inner {
     display: flex;
-    align-items: center;
+
     justify-content: space-between;
-    gap: 30px;
+
+    align-items: center;
+
+    gap: 25px;
 }
 
 .footer-brand {
-    color: #8191a2;
-    font-family: monospace;
-    font-size: 12px;
-    letter-spacing: .14em;
+    color: #718095;
+
+    font-family: "Courier New", monospace;
+
+    font-size: 10px;
+
+    letter-spacing: .18em;
 }
 
 .footer-note {
-    font-size: 11px;
+    color: #465467;
+
+    font-size: 10px;
+
+    text-align: right;
 }
 
-/* =========================
+/* =========================================
    RESPONSIVE
-========================= */
+========================================= */
 
 @media (max-width: 850px) {
 
@@ -630,532 +970,367 @@ footer {
         display: none;
     }
 
-    .core-grid,
+    .system-grid,
     .case-grid,
-    .positioning-grid {
+    .position-grid {
         grid-template-columns: 1fr;
     }
 
-    .layers {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .architecture-box {
-        padding: 25px;
-    }
-
-    .statement {
-        padding: 20px;
-    }
-
     .hero {
-        min-height: 80vh;
+        min-height: 850px;
+    }
+
+    .reflection {
+        height: 130px;
+    }
+
+    .wave {
+        width: 500px;
     }
 
     .footer-inner {
         flex-direction: column;
+
         align-items: flex-start;
+    }
+
+    .footer-note {
+        text-align: left;
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 520px) {
 
     .container {
-        width: min(calc(100% - 28px), var(--max));
+        width: calc(100% - 28px);
     }
 
     .hero h1 {
-        font-size: 48px;
+        font-size: 47px;
     }
 
     .hero-subtitle {
         letter-spacing: .22em;
     }
 
-    .layers {
-        grid-template-columns: 1fr;
+    .hero-statement {
+        padding: 21px;
     }
 
-    .card,
+    .system-card,
     .case,
-    .positioning-card {
-        padding: 24px;
+    .position-card,
+    .ip-box {
+        padding: 25px;
     }
 }
+
 </style>
 </head>
 
+
 <body>
 
-<!-- =========================
-     NAVIGATION
-========================= -->
 
-<nav class="nav">
+<!-- =========================================
+     NAVIGATION
+========================================= -->
+
+<nav>
+
     <div class="container nav-inner">
 
-        <a href="#top" class="brand">
-            <span class="brand-mark">Σ</span>
+        <a href="#top" class="nav-brand">
+
+            <span class="nav-symbol">Σ</span>
+
             SECOND SUN
+
         </a>
 
         <div class="nav-links">
+
             <a href="#system">SYSTEM</a>
-            <a href="#architecture">ARCHITECTURE</a>
-            <a href="#cases">CASE LIBRARY</a>
-            <a href="#principle">PRINCIPLE</a>
+
+            <a href="#architecture">APPROACH</a>
+
+            <a href="#cases">CASES</a>
+
+            <a href="#contact">CONTACT</a>
+
         </div>
 
     </div>
+
 </nav>
 
 
-<!-- =========================
-     HERO
-========================= -->
-
 <main id="top">
 
+
+<!-- =========================================
+     HERO
+========================================= -->
+
 <section class="hero">
+
     <div class="container hero-content">
 
-        <div class="logo-placeholder">
-            ΣSS
+        <div class="logo-frame">
+
+            <img
+                src="Parallel System Second Sun.png"
+                alt="Parallel System Space — SECOND SUN"
+                onerror="
+                    this.style.display='none';
+                    document.querySelector('.logo-fallback').style.display='flex';
+                "
+            >
+
+            <div class="logo-fallback">
+                ΣSS
+            </div>
+
         </div>
 
-        <div class="eyebrow">
+
+        <div class="label">
             Independent System Architecture
         </div>
 
-        <h1>SECOND SUN</h1>
+
+        <h1>
+            SECOND SUN
+        </h1>
+
 
         <div class="hero-subtitle">
             The White-Box System
         </div>
 
-        <div class="statement">
 
-            Andere nennen sich Whitebox, weil sie versuchen,
-            ihre Blackboxen erklärbar zu machen.<br><br>
+        <div class="hero-statement">
 
-            <strong>SECOND SUN</strong> ist eine Whitebox,
-            weil es von Grund auf keine Blackbox ist.
+            Others describe their systems as white-boxes
+            because they attempt to make black-boxes explainable.
+
+            <br><br>
+
+            <strong>SECOND SUN</strong> is designed as a
+            white-box system from the ground up.
 
         </div>
+
 
         <div class="hero-tags">
-            <span>Deterministisch</span>
-            <span>Domänenagnostisch</span>
-            <span>Nachvollziehbar</span>
-            <span>Messbar</span>
+
+            <span>Deterministic</span>
+
+            <span>Domain-Agnostic</span>
+
+            <span>Traceable</span>
+
+            <span>Measurable</span>
+
         </div>
 
     </div>
+
+
+    <div class="reflection">
+
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+
+    </div>
+
 </section>
 
 
-<!-- =========================
+<!-- =========================================
      SYSTEM
-========================= -->
+========================================= -->
 
 <section id="system">
+
     <div class="container">
 
         <div class="section-header">
-            <div class="eyebrow">System Identity</div>
 
-            <h2>
-                Ein System zur strukturierten
-                Bewertung komplexer Zustände.
-            </h2>
-
-            <p>
-                SECOND SUN strukturiert Funktionen, Layer,
-                Materialien, Prozesse, Umweltbedingungen und
-                Konflikte innerhalb eines gemeinsamen
-                deterministischen Bewertungsrahmens.
-            </p>
-        </div>
-
-
-        <div class="core-grid">
-
-            <article class="card">
-                <div class="card-number">01 / CORE</div>
-
-                <h3>Deterministisch</h3>
-
-                <p>
-                    Zustände werden anhand definierter Regeln,
-                    Bedingungen und Schwellen bewertet —
-                    nicht durch probabilistische Blackbox-Logik.
-                </p>
-            </article>
-
-
-            <article class="card">
-                <div class="card-number">02 / STRUCTURE</div>
-
-                <h3>Domänenagnostisch</h3>
-
-                <p>
-                    Die Architektur kann auf unterschiedliche
-                    physikalische, technische und infrastrukturelle
-                    Systeme angewendet werden.
-                </p>
-            </article>
-
-
-            <article class="card">
-                <div class="card-number">03 / TRACEABILITY</div>
-
-                <h3>Nachvollziehbar</h3>
-
-                <p>
-                    Konflikte, Zustände und Übergänge bleiben
-                    strukturell rückverfolgbar und können über
-                    definierte Messprinzipien überprüft werden.
-                </p>
-            </article>
-
-        </div>
-
-    </div>
-</section>
-
-
-<!-- =========================
-     ARCHITECTURE
-========================= -->
-
-<section id="architecture" class="architecture">
-    <div class="container">
-
-        <div class="section-header">
-            <div class="eyebrow">Core Architecture</div>
-
-            <h2>
-                Struktur vor Bewertung.
-            </h2>
-
-            <p>
-                Das System betrachtet ein reales System nicht
-                als isolierte Einzelkomponente, sondern als
-                gekoppelte Struktur aus Funktionen, Layern,
-                Materialien, Prozessen und Umweltbedingungen.
-            </p>
-        </div>
-
-
-        <div class="architecture-box">
-
-            <div class="formula">
-                S = (F, L, M, P, C, U, R)
+            <div class="label">
+                System Identity
             </div>
 
-            <div class="layers">
-
-                <div class="layer">
-                    <small>F</small>
-                    <span>Funktionen</span>
-                </div>
-
-                <div class="layer">
-                    <small>L</small>
-                    <span>Layer</span>
-                </div>
-
-                <div class="layer">
-                    <small>M</small>
-                    <span>Materialien</span>
-                </div>
-
-                <div class="layer">
-                    <small>P</small>
-                    <span>Prozesse</span>
-                </div>
-
-                <div class="layer">
-                    <small>U</small>
-                    <span>Umwelt</span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-
-<!-- =========================
-     CASE LIBRARY
-========================= -->
-
-<section id="cases">
-    <div class="container">
-
-        <div class="section-header">
-            <div class="eyebrow">Infrastructure Case Library</div>
-
             <h2>
-                Von der Struktur zum operativen Zustand.
+                Structured evaluation
+                <span class="gradient-text">
+                    before escalation.
+                </span>
             </h2>
 
             <p>
-                Beispielhafte Anwendung der Architektur auf
-                komplexe Infrastrukturzustände.
+                SECOND SUN provides a deterministic framework
+                for structuring complex systems, identifying
+                conflicts and evaluating operational states
+                without requiring the system to be redesigned.
             </p>
-        </div>
-
-
-        <div class="case-grid">
-
-            <article class="case">
-
-                <div class="case-head">
-                    <span class="case-id">CASE W-01</span>
-                    <span class="case-status">VALID</span>
-                </div>
-
-                <h3>Normaler Betriebszustand</h3>
-
-                <p>
-                    Grundstruktur eines urbanen
-                    Wasserverteilungsnetzes unter nominalen
-                    Betriebsbedingungen.
-                </p>
-
-                <div class="case-tags">
-                    <span>SFL</span>
-                    <span>LAYER</span>
-                    <span>DRUCK</span>
-                    <span>UMWELT</span>
-                </div>
-
-            </article>
-
-
-            <article class="case">
-
-                <div class="case-head">
-                    <span class="case-id">CASE W-02</span>
-                    <span class="case-status">EVALUATION</span>
-                </div>
-
-                <h3>Druckeskalation</h3>
-
-                <p>
-                    Untersuchung gekoppelter Druck-, Material-
-                    und Alterungszustände innerhalb eines
-                    Verteilungsnetzes.
-                </p>
-
-                <div class="case-tags">
-                    <span>DRUCK</span>
-                    <span>ALTERUNG</span>
-                    <span>ERMÜDUNG</span>
-                    <span>ESKALATION</span>
-                </div>
-
-            </article>
-
-
-            <article class="case">
-
-                <div class="case-head">
-                    <span class="case-id">CASE W-03</span>
-                    <span class="case-status">EVALUATION</span>
-                </div>
-
-                <h3>Kontaminationseskalation</h3>
-
-                <p>
-                    Kopplung von Druckinstabilität,
-                    Grenzflächenzuständen und möglichen
-                    Eintrittspfaden.
-                </p>
-
-                <div class="case-tags">
-                    <span>GRENZFLÄCHE</span>
-                    <span>DRUCK</span>
-                    <span>UMWELT</span>
-                    <span>KOPPLUNG</span>
-                </div>
-
-            </article>
-
-
-            <article class="case">
-
-                <div class="case-head">
-                    <span class="case-id">CASE W-04</span>
-                    <span class="case-status">EVALUATION</span>
-                </div>
-
-                <h3>Redundanz & Isolation</h3>
-
-                <p>
-                    Bewertung von Segmenttrennung,
-                    Lastumlagerung und Redundanzreserven
-                    unter lokalen Ausfallbedingungen.
-                </p>
-
-                <div class="case-tags">
-                    <span>REDUNDANZ</span>
-                    <span>ISOLATION</span>
-                    <span>LAST</span>
-                    <span>RESILIENZ</span>
-                </div>
-
-            </article>
-
-
-            <article class="case">
-
-                <div class="case-head">
-                    <span class="case-id">CASE W-05</span>
-                    <span class="case-status">EVALUATION</span>
-                </div>
-
-                <h3>Alterung & Systemdrift</h3>
-
-                <p>
-                    Zeitabhängige Veränderung von Material-,
-                    Betriebs- und Stabilitätsparametern.
-                </p>
-
-                <div class="case-tags">
-                    <span>DRIFT</span>
-                    <span>ALTERUNG</span>
-                    <span>RESERVE</span>
-                    <span>ZEIT</span>
-                </div>
-
-            </article>
-
-
-            <article class="case">
-
-                <div class="case-head">
-                    <span class="case-id">CASE W-06</span>
-                    <span class="case-status">EVALUATION</span>
-                </div>
-
-                <h3>Umweltkopplung</h3>
-
-                <p>
-                    Bewertung der Wechselwirkung zwischen
-                    Feuchtigkeit, Temperatur, Bodenbedingungen
-                    und Infrastrukturzustand.
-                </p>
-
-                <div class="case-tags">
-                    <span>UMWELT</span>
-                    <span>FEUCHTE</span>
-                    <span>TEMPERATUR</span>
-                    <span>KORROSION</span>
-                </div>
-
-            </article>
 
         </div>
 
-    </div>
-</section>
+
+        <div class="system-grid">
 
 
-<!-- =========================
-     POSITIONING
-========================= -->
+            <article class="system-card">
 
-<section>
-    <div class="container">
+                <div class="card-number">
+                    01 / DETERMINISTIC
+                </div>
 
-        <div class="section-header">
-            <div class="eyebrow">Positioning</div>
-
-            <h2>
-                Keine Blackbox.
-                Keine Neugestaltung des Systems.
-            </h2>
-
-            <p>
-                SECOND SUN ist als vorgelagerte technische
-                Bewertungsschicht konzipiert und kann bestehende
-                Systemstrukturen auf ihren aktuellen Zustand
-                untersuchen.
-            </p>
-        </div>
-
-
-        <div class="positioning-grid">
-
-            <article class="positioning-card good">
-
-                <h3>SECOND SUN</h3>
-
-                <ul>
-                    <li>deterministische Bewertung</li>
-                    <li>Konflikterkennung</li>
-                    <li>Operational-State-Evaluierung</li>
-                    <li>nachvollziehbare Regeln</li>
-                    <li>bestehende Infrastruktur integrierbar</li>
-                    <li>messbare Zustände</li>
-                </ul>
-
-            </article>
-
-
-            <article class="positioning-card">
-
-                <h3 style="color:#7d8da0;">
-                    Nicht das Ziel
+                <h3>
+                    Deterministic validation
                 </h3>
 
-                <ul>
-                    <li>keine generative KI</li>
-                    <li>keine Blackbox-Prognose</li>
-                    <li>kein vollständiger Systemneubau</li>
-                    <li>keine Simulation als Ersatz für Realität</li>
-                    <li>keine Optimierung um jeden Preis</li>
-                    <li>keine unprüfbaren Ergebnisse</li>
-                </ul>
+                <p>
+                    Defined conditions, rules and measurable
+                    states provide traceable evaluation paths.
+                </p>
+
+            </article>
+
+
+            <article class="system-card">
+
+                <div class="card-number">
+                    02 / OPERATIONAL
+                </div>
+
+                <h3>
+                    Current operational state
+                </h3>
+
+                <p>
+                    SECOND SUN enters systems at their current
+                    operational state rather than requiring
+                    complete reconstruction.
+                </p>
+
+            </article>
+
+
+            <article class="system-card">
+
+                <div class="card-number">
+                    03 / CROSS-DOMAIN
+                </div>
+
+                <h3>
+                    Domain-agnostic architecture
+                </h3>
+
+                <p>
+                    The same structural approach can be applied
+                    across different technical and physical
+                    system domains.
+                </p>
+
+            </article>
+
+
+            <article class="system-card">
+
+                <div class="card-number">
+                    04 / TRACEABLE
+                </div>
+
+                <h3>
+                    Conflict traceability
+                </h3>
+
+                <p>
+                    Identified conflicts can be connected to
+                    their relevant functions, interfaces,
+                    processes and environmental conditions.
+                </p>
+
+            </article>
+
+
+            <article class="system-card">
+
+                <div class="card-number">
+                    05 / MEASURABLE
+                </div>
+
+                <h3>
+                    Observable conditions
+                </h3>
+
+                <p>
+                    Physical fields and system conditions can
+                    be associated with defined measurement
+                    principles.
+                </p>
+
+            </article>
+
+
+            <article class="system-card">
+
+                <div class="card-number">
+                    06 / INFRASTRUCTURE
+                </div>
+
+                <h3>
+                    Existing systems
+                </h3>
+
+                <p>
+                    The architecture is intended to operate
+                    upstream of existing engineering,
+                    infrastructure and operational environments.
+                </p>
 
             </article>
 
         </div>
 
     </div>
+
 </section>
 
 
-<!-- =========================
-     PRINCIPLE
-========================= -->
+<!-- =========================================
+     APPROACH
+========================================= -->
 
-<section id="principle" class="principle">
+<section id="architecture" class="principle">
 
     <div class="container">
 
         <div class="principle-box">
 
-            <div class="eyebrow">Core Principle</div>
+            <div class="label">
+                Core Principle
+            </div>
 
             <h2>
                 SECOND SUN enters systems
-                at their current operational state.
+                <span class="gradient-text">
+                    at their current operational state.
+                </span>
             </h2>
 
             <p>
-                Die Architektur beginnt dort,
-                wo ein System tatsächlich steht —
-                nicht dort, wo es idealerweise neu entworfen
-                werden könnte.
+                The framework examines how functions,
+                interfaces, processes, materials and
+                environmental conditions interact within
+                an existing system.
                 <br><br>
-                <strong>
-                    Zwei Domänen. Ein Konflikt. Eine Lösung.
-                </strong>
+                The objective is not to replace engineering
+                systems, but to provide an additional
+                deterministic evaluation layer.
             </p>
 
         </div>
@@ -1164,60 +1339,392 @@ footer {
 
 </section>
 
+
+<!-- =========================================
+     CASE LIBRARY
+========================================= -->
+
+<section id="cases">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="label">
+                Case Library
+            </div>
+
+            <h2>
+                From individual conflicts
+                to system states.
+            </h2>
+
+            <p>
+                Initial infrastructure cases demonstrate how
+                deterministic evaluation can structure
+                operational, environmental and degradation
+                conditions.
+            </p>
+
+        </div>
+
+
+        <div class="case-grid">
+
+
+            <article class="case">
+
+                <div class="case-top">
+
+                    <span class="case-id">
+                        WATER / W-01
+                    </span>
+
+                    <span class="case-state">
+                        BASE STATE
+                    </span>
+
+                </div>
+
+                <h3>
+                    Urban water distribution
+                </h3>
+
+                <p>
+                    Structural evaluation of a layered freshwater
+                    distribution environment under nominal
+                    operational conditions.
+                </p>
+
+                <div class="case-meta">
+
+                    <span>PRESSURE</span>
+                    <span>LAYERS</span>
+                    <span>MATERIAL</span>
+                    <span>ENVIRONMENT</span>
+
+                </div>
+
+            </article>
+
+
+            <article class="case">
+
+                <div class="case-top">
+
+                    <span class="case-id">
+                        WATER / W-02
+                    </span>
+
+                    <span class="case-state">
+                        EVALUATION
+                    </span>
+
+                </div>
+
+                <h3>
+                    Pressure escalation
+                </h3>
+
+                <p>
+                    Coupling between pressure transients,
+                    material degradation and changing
+                    operational load.
+                </p>
+
+                <div class="case-meta">
+
+                    <span>PRESSURE</span>
+                    <span>FATIGUE</span>
+                    <span>DRIFT</span>
+                    <span>ESCALATION</span>
+
+                </div>
+
+            </article>
+
+
+            <article class="case">
+
+                <div class="case-top">
+
+                    <span class="case-id">
+                        WATER / W-03
+                    </span>
+
+                    <span class="case-state">
+                        EVALUATION
+                    </span>
+
+                </div>
+
+                <h3>
+                    Interface & contamination pathway
+                </h3>
+
+                <p>
+                    Evaluation of coupled pressure,
+                    interface and environmental conditions.
+                </p>
+
+                <div class="case-meta">
+
+                    <span>INTERFACE</span>
+                    <span>PRESSURE</span>
+                    <span>ENVIRONMENT</span>
+                    <span>COUPLING</span>
+
+                </div>
+
+            </article>
+
+
+            <article class="case">
+
+                <div class="case-top">
+
+                    <span class="case-id">
+                        WATER / W-04
+                    </span>
+
+                    <span class="case-state">
+                        EVALUATION
+                    </span>
+
+                </div>
+
+                <h3>
+                    Redundancy & isolation
+                </h3>
+
+                <p>
+                    Evaluation of segment isolation,
+                    load redistribution and redundancy
+                    under local disturbance conditions.
+                </p>
+
+                <div class="case-meta">
+
+                    <span>REDUNDANCY</span>
+                    <span>ISOLATION</span>
+                    <span>LOAD</span>
+                    <span>RESILIENCE</span>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     POSITIONING
+========================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <div class="label">
+                Positioning
+            </div>
+
+            <h2>
+                An additional engineering layer.
+            </h2>
+
+            <p>
+                SECOND SUN is positioned as an independent
+                deterministic evaluation framework rather
+                than as a replacement for existing engineering
+                infrastructure.
+            </p>
+
+        </div>
+
+
+        <div class="position-grid">
+
+
+            <article class="position-card primary">
+
+                <h3>
+                    SECOND SUN
+                </h3>
+
+                <ul>
+
+                    <li>
+                        Deterministic validation
+                    </li>
+
+                    <li>
+                        Conflict detection
+                    </li>
+
+                    <li>
+                        Operational-state evaluation
+                    </li>
+
+                    <li>
+                        Traceable evaluation paths
+                    </li>
+
+                    <li>
+                        Existing infrastructure compatibility
+                    </li>
+
+                    <li>
+                        Measurable physical conditions
+                    </li>
+
+                </ul>
+
+            </article>
+
+
+            <article class="position-card">
+
+                <h3 style="color:#8b99aa;">
+                    Not positioned as
+                </h3>
+
+                <ul>
+
+                    <li>
+                        Generative AI
+                    </li>
+
+                    <li>
+                        Probabilistic black-box prediction
+                    </li>
+
+                    <li>
+                        A replacement for engineering systems
+                    </li>
+
+                    <li>
+                        A simulation replacement
+                    </li>
+
+                    <li>
+                        A mandatory system redesign
+                    </li>
+
+                    <li>
+                        An untraceable optimization layer
+                    </li>
+
+                </ul>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     IP PROTECTION
+========================================= -->
+
+<section class="ip-section">
+
+    <div class="container">
+
+        <div class="ip-box">
+
+            <h3>
+                Proprietary Methodology
+            </h3>
+
+            <p>
+                Selected validation structures, rule architectures
+                and evaluation methodologies remain proprietary.
+                Public material therefore presents principles,
+                application examples and observable outputs
+                without exposing the complete internal rule system.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CONTACT
+========================================= -->
+
+<section id="contact" class="contact">
+
+    <div class="container">
+
+        <div class="contact-box">
+
+            <div class="label">
+                Independent Research Initiative
+            </div>
+
+            <h2>
+                Open to technical evaluation.
+            </h2>
+
+            <p>
+                SECOND SUN is currently in an early evaluation
+                phase, with a focus on infrastructure systems,
+                operational-state assessment and deterministic
+                conflict analysis.
+            </p>
+
+            <a
+                class="contact-link"
+                href="mailto:a-stachowicz@gmx.de"
+            >
+                TECHNICAL CONTACT
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
 </main>
 
 
-<!-- =========================
+<!-- =========================================
      FOOTER
-========================= -->
+========================================= -->
 
 <footer>
 
     <div class="container footer-inner">
 
         <div class="footer-brand">
-            SECOND SUN SYSTEM
+            SECOND SUN · PARALLEL SYSTEM SPACE
         </div>
 
         <div class="footer-note">
-            Independent System Architecture · © 2026
+            Independent System Architecture · 2026
         </div>
 
     </div>
 
 </footer>
 
-
-<script>
-/*
-    SECOND SUN — minimal interaction layer
-
-    Keine externe Bibliothek.
-    Keine Tracking-Skripte.
-    Keine Abhängigkeiten.
-*/
-
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-
-    link.addEventListener("click", event => {
-
-        const target = document.querySelector(
-            link.getAttribute("href")
-        );
-
-        if (!target) return;
-
-        event.preventDefault();
-
-        target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    });
-
-});
-</script>
 
 </body>
 </html>
