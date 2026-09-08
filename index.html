@@ -1,27 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>SECOND SUN — The White-Box System</title>
 
-<meta name="description"
-content="SECOND SUN is an independent deterministic system architecture for structured validation, conflict detection and operational-state evaluation.">
+<meta
+    name="description"
+    content="SECOND SUN is an independent deterministic system architecture for validation, conflict mapping and operational-state evaluation."
+>
 
 <style>
 
+/* =========================================================
+   SECOND SUN — PUBLIC WEBSITE V1
+   No external libraries
+   No tracking
+   No internal rule architecture exposed
+========================================================= */
+
 :root {
+
     --black: #020408;
-    --black2: #050a10;
+    --black-soft: #050a10;
+
     --cyan: #00e8f0;
     --blue: #247cff;
     --violet: #a66cff;
+
     --white: #e8edf5;
-    --silver: #aab5c4;
+    --silver: #aeb9c7;
     --muted: #718096;
-    --line: rgba(130,160,200,.15);
-    --glass: rgba(7,13,21,.72);
+    --dark-muted: #465467;
+
+    --line: rgba(130,160,200,.14);
+
+    --max-width: 1160px;
 }
 
 * {
@@ -33,7 +49,9 @@ html {
 }
 
 body {
+
     margin: 0;
+
     background:
         radial-gradient(
             ellipse at 50% 0%,
@@ -46,48 +64,54 @@ body {
             transparent 42%
         ),
         var(--black);
+
     color: var(--white);
+
     font-family:
         Inter,
         "Segoe UI",
-        Helvetica,
         Arial,
         sans-serif;
+
     line-height: 1.7;
 }
 
-/* =========================================
-   GLOBAL
-========================================= */
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
 .container {
-    width: min(1160px, calc(100% - 48px));
+
+    width: min(
+        var(--max-width),
+        calc(100% - 48px)
+    );
+
     margin: 0 auto;
 }
 
 section {
-    padding: 110px 0;
+    padding: 115px 0;
 }
 
 .label {
+
     color: var(--cyan);
-    font-family: "Courier New", monospace;
-    font-size: 11px;
-    letter-spacing: .3em;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    letter-spacing: .28em;
+
     text-transform: uppercase;
 }
 
-h1,
-h2,
-h3 {
-    margin: 0;
-}
+.gradient {
 
-p {
-    margin: 0;
-}
-
-.gradient-text {
     background:
         linear-gradient(
             90deg,
@@ -95,107 +119,148 @@ p {
             var(--blue),
             var(--violet)
         );
+
     -webkit-background-clip: text;
     background-clip: text;
+
     color: transparent;
 }
 
-/* =========================================
+
+/* =========================================================
    NAVIGATION
-========================================= */
+========================================================= */
 
 nav {
+
     position: fixed;
-    z-index: 100;
+
     top: 0;
+    left: 0;
+
     width: 100%;
-    border-bottom: 1px solid rgba(130,160,200,.09);
-    background: rgba(2,4,8,.68);
-    backdrop-filter: blur(18px);
+
+    z-index: 100;
+
+    border-bottom:
+        1px solid rgba(130,160,200,.08);
+
+    background:
+        rgba(2,4,8,.72);
+
+    backdrop-filter:
+        blur(18px);
 }
 
 .nav-inner {
+
     height: 72px;
+
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
+
+    justify-content: space-between;
 }
 
 .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 13px;
 
-    color: #d9e0e9;
-    font-size: 13px;
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: #dce3ec;
+
+    font-size: 12px;
+
     font-weight: 600;
-    letter-spacing: .25em;
+
+    letter-spacing: .24em;
 }
 
 .nav-symbol {
+
     width: 29px;
     height: 29px;
 
     display: grid;
+
     place-items: center;
 
-    border: 1px solid rgba(0,232,240,.6);
+    border:
+        1px solid rgba(0,232,240,.55);
+
     border-radius: 50%;
 
     color: var(--cyan);
 
     box-shadow:
-        0 0 18px rgba(0,232,240,.14);
+        0 0 18px rgba(0,232,240,.12);
 }
 
 .nav-links {
+
     display: flex;
+
     gap: 30px;
 
-    color: #69788a;
+    color: #657589;
 
-    font-family: "Courier New", monospace;
-    font-size: 10px;
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
     letter-spacing: .15em;
 }
 
 .nav-links a {
-    transition: color .25s ease;
+    transition: color .2s ease;
 }
 
 .nav-links a:hover {
     color: var(--cyan);
 }
 
-/* =========================================
+
+/* =========================================================
    HERO
-========================================= */
+========================================================= */
 
 .hero {
+
     min-height: 100vh;
 
+    padding-top: 72px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     position: relative;
-    overflow: hidden;
 
-    padding-top: 72px;
+    overflow: hidden;
 }
 
 .hero::before {
+
     content: "";
 
     position: absolute;
 
-    width: 900px;
-    height: 900px;
+    width: 850px;
+    height: 850px;
 
     left: 50%;
     top: 48%;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 
     border-radius: 50%;
 
@@ -203,114 +268,232 @@ nav {
         radial-gradient(
             circle,
             rgba(0,232,240,.035),
-            transparent 55%
+            transparent 58%
         );
 
     pointer-events: none;
 }
 
 .hero-content {
+
     position: relative;
-    z-index: 2;
+
+    z-index: 5;
 
     width: 100%;
 
     text-align: center;
 }
 
-/* =========================================
-   LOGO
-========================================= */
 
-.logo-frame {
-    width: min(280px, 65vw);
-    margin: 0 auto 30px;
+/* =========================================================
+   LOGO COMPOSITION
+========================================================= */
+
+.brand-hero {
 
     position: relative;
 
-    border-radius: 50%;
+    width:
+        min(760px, 94vw);
+
+    height: 390px;
+
+    margin: 0 auto 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
 }
 
-.logo-frame img {
+
+/* Existing logo */
+
+.brand-symbol {
+
+    position: relative;
+
+    width:
+        min(500px, 74vw);
+
+    z-index: 3;
+}
+
+.brand-symbol img {
+
     display: block;
 
     width: 100%;
+
     height: auto;
 
+    background: transparent;
+
+    border: none;
+
     filter:
-        drop-shadow(0 0 22px rgba(0,232,240,.12))
-        drop-shadow(0 0 25px rgba(166,108,255,.10));
+        drop-shadow(
+            0 0 18px rgba(0,232,240,.10)
+        )
+        drop-shadow(
+            0 0 24px rgba(36,124,255,.10)
+        )
+        drop-shadow(
+            0 0 22px rgba(166,108,255,.08)
+        );
 }
 
-/*
-   Falls das Bild nicht gefunden wird,
-   bleibt das technische Ersatzsymbol sichtbar.
-*/
 
-.logo-fallback {
-    display: none;
+/* Horizon */
 
-    width: 170px;
-    height: 170px;
+.brand-horizon {
 
-    margin: auto;
+    position: absolute;
 
-    border: 1px solid rgba(0,232,240,.55);
-    border-radius: 50%;
+    top: 316px;
 
-    align-items: center;
-    justify-content: center;
+    left: 50%;
 
-    color: var(--cyan);
+    transform:
+        translateX(-50%);
 
-    font-family: Georgia, serif;
-    font-size: 34px;
+    width:
+        min(900px, 120vw);
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,232,240,.08),
+            var(--cyan),
+            var(--blue),
+            var(--violet),
+            rgba(166,108,255,.08),
+            transparent
+        );
 
     box-shadow:
-        0 0 35px rgba(0,232,240,.12);
+        0 0 9px rgba(0,232,240,.4),
+        0 0 25px rgba(36,124,255,.15);
+
+    z-index: 4;
 }
 
-.hero h1 {
-    font-family: Georgia, "Times New Roman", serif;
 
-    font-size: clamp(52px, 8vw, 96px);
+/* Water reflection */
+
+.brand-reflection {
+
+    position: absolute;
+
+    top: 320px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        scaleY(-1);
+
+    width:
+        min(500px, 74vw);
+
+    height: 100px;
+
+    opacity: .13;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(0,232,240,.20),
+            transparent 52%
+        );
+
+    -webkit-mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent
+        );
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent
+        );
+
+    z-index: 2;
+}
+
+
+/* Main title */
+
+.hero h1 {
+
+    position: relative;
+
+    z-index: 8;
+
+    margin: -5px 0 0;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(54px, 8vw, 94px);
 
     font-weight: 400;
 
-    letter-spacing: .08em;
-
     line-height: 1;
+
+    letter-spacing: .08em;
 
     color: #ddd2ff;
 
     text-shadow:
-        0 0 35px rgba(166,108,255,.10);
+        0 0 30px rgba(166,108,255,.10);
 }
 
 .hero-subtitle {
+
+    position: relative;
+
+    z-index: 8;
+
     margin-top: 18px;
 
     color: #8d9bad;
 
-    font-family: "Courier New", monospace;
+    font-family:
+        "Courier New",
+        monospace;
 
-    font-size: clamp(12px, 2vw, 18px);
+    font-size:
+        clamp(11px, 1.6vw, 16px);
 
-    letter-spacing: .42em;
+    letter-spacing: .38em;
 
     text-transform: uppercase;
 }
 
-/* =========================================
+
+/* =========================================================
    HERO STATEMENT
-========================================= */
+========================================================= */
 
 .hero-statement {
+
     max-width: 760px;
 
-    margin: 46px auto 0;
+    margin: 42px auto 0;
 
-    padding: 27px 30px;
+    padding: 25px 30px;
 
     text-align: left;
 
@@ -326,7 +509,9 @@ nav {
 
     color: #9aa9b9;
 
-    font-family: Georgia, serif;
+    font-family:
+        Georgia,
+        serif;
 
     font-size: 16px;
 }
@@ -337,133 +522,66 @@ nav {
 }
 
 .hero-tags {
+
     display: flex;
 
     justify-content: center;
+
     flex-wrap: wrap;
 
-    gap: 12px 34px;
+    gap: 12px 32px;
 
-    margin-top: 34px;
+    margin-top: 30px;
 }
 
 .hero-tags span {
+
     color: #637387;
 
-    font-family: "Courier New", monospace;
+    font-family:
+        "Courier New",
+        monospace;
 
-    font-size: 10px;
+    font-size: 9px;
 
-    letter-spacing: .2em;
+    letter-spacing: .19em;
 
     text-transform: uppercase;
 }
 
 .hero-tags span::before {
+
     content: "◆";
 
     margin-right: 8px;
 
     color: var(--cyan);
 
-    font-size: 6px;
+    font-size: 5px;
 }
 
-/* =========================================
-   WATER / REFLECTION EFFECT
-========================================= */
 
-.reflection {
-    position: absolute;
-
-    left: 0;
-    right: 0;
-
-    bottom: 0;
-
-    height: 170px;
-
-    overflow: hidden;
-
-    opacity: .72;
-
-    pointer-events: none;
-}
-
-.reflection::before {
-    content: "";
-
-    position: absolute;
-
-    top: 12px;
-    left: 50%;
-
-    width: 75%;
-    height: 1px;
-
-    transform: translateX(-50%);
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--cyan),
-            var(--blue),
-            var(--violet),
-            transparent
-        );
-
-    box-shadow:
-        0 0 16px rgba(0,232,240,.7);
-}
-
-.wave {
-    position: absolute;
-
-    left: 50%;
-
-    width: 680px;
-    height: 150px;
-
-    transform: translateX(-50%);
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(0,232,240,.12);
-
-    box-shadow:
-        0 0 0 18px rgba(36,124,255,.025),
-        0 0 0 38px rgba(166,108,255,.02),
-        0 0 0 60px rgba(0,232,240,.018);
-}
-
-.wave:nth-child(2) {
-    width: 480px;
-    height: 100px;
-    top: 25px;
-}
-
-.wave:nth-child(3) {
-    width: 300px;
-    height: 65px;
-    top: 42px;
-}
-
-/* =========================================
-   SECTION HEADER
-========================================= */
+/* =========================================================
+   SECTION HEADERS
+========================================================= */
 
 .section-header {
+
     max-width: 760px;
+
     margin-bottom: 52px;
 }
 
 .section-header h2 {
+
     margin-top: 15px;
 
-    font-family: Georgia, serif;
+    font-family:
+        Georgia,
+        serif;
 
-    font-size: clamp(34px, 5vw, 55px);
+    font-size:
+        clamp(34px, 5vw, 55px);
 
     font-weight: 400;
 
@@ -473,6 +591,7 @@ nav {
 }
 
 .section-header p {
+
     margin-top: 18px;
 
     color: var(--muted);
@@ -480,11 +599,13 @@ nav {
     font-size: 15px;
 }
 
-/* =========================================
-   SYSTEM CARDS
-========================================= */
+
+/* =========================================================
+   SYSTEM
+========================================================= */
 
 .system-grid {
+
     display: grid;
 
     grid-template-columns:
@@ -494,11 +615,12 @@ nav {
 }
 
 .system-card {
+
     position: relative;
 
-    padding: 32px;
-
     min-height: 230px;
+
+    padding: 31px;
 
     border:
         1px solid var(--line);
@@ -508,7 +630,7 @@ nav {
     background:
         linear-gradient(
             145deg,
-            rgba(10,19,29,.84),
+            rgba(10,19,29,.86),
             rgba(3,8,13,.78)
         );
 
@@ -518,13 +640,16 @@ nav {
 }
 
 .system-card:hover {
-    transform: translateY(-5px);
+
+    transform:
+        translateY(-4px);
 
     border-color:
-        rgba(0,232,240,.3);
+        rgba(0,232,240,.28);
 }
 
 .system-card::before {
+
     content: "";
 
     position: absolute;
@@ -532,7 +657,7 @@ nav {
     top: 0;
     left: 28px;
 
-    width: 50px;
+    width: 48px;
     height: 1px;
 
     background:
@@ -544,16 +669,20 @@ nav {
 }
 
 .card-number {
+
     color: var(--cyan);
 
-    font-family: "Courier New", monospace;
+    font-family:
+        "Courier New",
+        monospace;
 
-    font-size: 10px;
+    font-size: 9px;
 
     letter-spacing: .18em;
 }
 
 .system-card h3 {
+
     margin-top: 18px;
 
     color: #dce4ed;
@@ -564,6 +693,7 @@ nav {
 }
 
 .system-card p {
+
     margin-top: 10px;
 
     color: #728296;
@@ -571,13 +701,18 @@ nav {
     font-size: 14px;
 }
 
-/* =========================================
-   CORE PRINCIPLE
-========================================= */
+
+/* =========================================================
+   PRINCIPLE
+========================================================= */
 
 .principle {
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+
+    border-top:
+        1px solid var(--line);
+
+    border-bottom:
+        1px solid var(--line);
 
     background:
         radial-gradient(
@@ -588,6 +723,7 @@ nav {
 }
 
 .principle-box {
+
     max-width: 920px;
 
     margin: auto;
@@ -596,11 +732,15 @@ nav {
 }
 
 .principle-box h2 {
+
     margin-top: 18px;
 
-    font-family: Georgia, serif;
+    font-family:
+        Georgia,
+        serif;
 
-    font-size: clamp(32px, 5vw, 58px);
+    font-size:
+        clamp(34px, 5vw, 58px);
 
     font-weight: 400;
 
@@ -608,6 +748,7 @@ nav {
 }
 
 .principle-box p {
+
     max-width: 700px;
 
     margin: 25px auto 0;
@@ -619,19 +760,16 @@ nav {
 
 .principle-box strong {
     color: var(--cyan);
-
     font-weight: 500;
 }
 
-/* =========================================
-   CASE LIBRARY
-========================================= */
 
-.case-section {
-    position: relative;
-}
+/* =========================================================
+   CASE LIBRARY
+========================================================= */
 
 .case-grid {
+
     display: grid;
 
     grid-template-columns:
@@ -641,7 +779,8 @@ nav {
 }
 
 .case {
-    padding: 30px;
+
+    padding: 31px;
 
     border:
         1px solid var(--line);
@@ -650,44 +789,66 @@ nav {
 
     background:
         rgba(6,12,19,.72);
+
+    transition:
+        border-color .25s ease,
+        transform .25s ease;
+}
+
+.case:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(0,232,240,.25);
 }
 
 .case-top {
+
     display: flex;
 
-    justify-content: space-between;
-
     align-items: center;
+
+    justify-content: space-between;
 }
 
 .case-id {
+
     color: var(--cyan);
 
-    font-family: "Courier New", monospace;
-
-    font-size: 10px;
-
-    letter-spacing: .16em;
-}
-
-.case-state {
-    color: var(--green, #42d99b);
-
-    font-family: "Courier New", monospace;
+    font-family:
+        "Courier New",
+        monospace;
 
     font-size: 9px;
 
+    letter-spacing: .15em;
+}
+
+.case-state {
+
+    color: #55dba8;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
     letter-spacing: .12em;
 
-    padding: 5px 9px;
+    padding: 5px 8px;
 
-    border: 1px solid rgba(66,217,155,.2);
+    border:
+        1px solid rgba(85,219,168,.20);
 
     border-radius: 20px;
 }
 
 .case h3 {
-    margin-top: 24px;
+
+    margin-top: 23px;
 
     color: #dce4ed;
 
@@ -697,6 +858,7 @@ nav {
 }
 
 .case p {
+
     margin-top: 10px;
 
     color: #718195;
@@ -705,16 +867,18 @@ nav {
 }
 
 .case-meta {
+
     display: flex;
 
     flex-wrap: wrap;
 
     gap: 7px;
 
-    margin-top: 24px;
+    margin-top: 23px;
 }
 
 .case-meta span {
+
     padding: 5px 8px;
 
     border:
@@ -724,18 +888,22 @@ nav {
 
     color: #647488;
 
-    font-family: "Courier New", monospace;
+    font-family:
+        "Courier New",
+        monospace;
 
-    font-size: 9px;
+    font-size: 8px;
 
     letter-spacing: .08em;
 }
 
-/* =========================================
+
+/* =========================================================
    POSITIONING
-========================================= */
+========================================================= */
 
 .position-grid {
+
     display: grid;
 
     grid-template-columns:
@@ -745,6 +913,7 @@ nav {
 }
 
 .position-card {
+
     padding: 35px;
 
     border:
@@ -753,10 +922,11 @@ nav {
     border-radius: 16px;
 
     background:
-        var(--glass);
+        rgba(7,13,21,.72);
 }
 
 .position-card.primary {
+
     border-color:
         rgba(0,232,240,.18);
 
@@ -764,11 +934,12 @@ nav {
         linear-gradient(
             145deg,
             rgba(0,232,240,.045),
-            rgba(4,10,16,.8)
+            rgba(4,10,16,.82)
         );
 }
 
 .position-card h3 {
+
     margin-bottom: 23px;
 
     color: var(--cyan);
@@ -779,6 +950,7 @@ nav {
 }
 
 .position-card ul {
+
     list-style: none;
 
     margin: 0;
@@ -786,6 +958,7 @@ nav {
 }
 
 .position-card li {
+
     padding: 9px 0;
 
     border-bottom:
@@ -797,6 +970,7 @@ nav {
 }
 
 .position-card li::before {
+
     content: "→";
 
     margin-right: 10px;
@@ -804,23 +978,25 @@ nav {
     color: var(--blue);
 }
 
-/* =========================================
-   IP PROTECTION
-========================================= */
+
+/* =========================================================
+   IP
+========================================================= */
 
 .ip-section {
-    padding-top: 40px;
+    padding-top: 25px;
 }
 
 .ip-box {
+
     max-width: 900px;
 
     margin: auto;
 
-    padding: 35px;
+    padding: 32px;
 
     border:
-        1px solid rgba(166,108,255,.16);
+        1px solid rgba(166,108,255,.15);
 
     border-radius: 16px;
 
@@ -828,16 +1004,19 @@ nav {
         linear-gradient(
             145deg,
             rgba(166,108,255,.035),
-            rgba(4,9,15,.7)
+            rgba(4,9,15,.72)
         );
 }
 
 .ip-box h3 {
+
     color: #c0aaff;
 
-    font-family: "Courier New", monospace;
+    font-family:
+        "Courier New",
+        monospace;
 
-    font-size: 12px;
+    font-size: 10px;
 
     letter-spacing: .18em;
 
@@ -845,36 +1024,48 @@ nav {
 }
 
 .ip-box p {
-    margin-top: 12px;
+
+    margin-top: 11px;
 
     color: #718195;
 
     font-size: 13px;
 }
 
-/* =========================================
+
+/* =========================================================
    CONTACT
-========================================= */
+========================================================= */
 
 .contact {
     text-align: center;
 }
 
 .contact-box {
+
     max-width: 800px;
 
     margin: auto;
 }
 
 .contact-box h2 {
-    font-family: Georgia, serif;
 
-    font-size: clamp(34px, 5vw, 55px);
+    margin-top: 15px;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(34px, 5vw, 55px);
 
     font-weight: 400;
+
+    line-height: 1.08;
 }
 
 .contact-box p {
+
     max-width: 620px;
 
     margin: 20px auto;
@@ -885,22 +1076,25 @@ nav {
 }
 
 .contact-link {
+
     display: inline-block;
 
     margin-top: 20px;
 
-    padding: 13px 22px;
+    padding: 12px 21px;
 
     border:
-        1px solid rgba(0,232,240,.3);
+        1px solid rgba(0,232,240,.30);
 
     border-radius: 5px;
 
     color: var(--cyan);
 
-    font-family: "Courier New", monospace;
+    font-family:
+        "Courier New",
+        monospace;
 
-    font-size: 11px;
+    font-size: 9px;
 
     letter-spacing: .14em;
 
@@ -910,18 +1104,21 @@ nav {
 }
 
 .contact-link:hover {
+
     background:
-        rgba(0,232,240,.07);
+        rgba(0,232,240,.06);
 
     border-color:
-        rgba(0,232,240,.6);
+        rgba(0,232,240,.58);
 }
 
-/* =========================================
+
+/* =========================================================
    FOOTER
-========================================= */
+========================================================= */
 
 footer {
+
     border-top:
         1px solid var(--line);
 
@@ -929,6 +1126,7 @@ footer {
 }
 
 .footer-inner {
+
     display: flex;
 
     justify-content: space-between;
@@ -939,31 +1137,36 @@ footer {
 }
 
 .footer-brand {
+
     color: #718095;
 
-    font-family: "Courier New", monospace;
+    font-family:
+        "Courier New",
+        monospace;
 
-    font-size: 10px;
+    font-size: 9px;
 
     letter-spacing: .18em;
 }
 
 .footer-note {
+
     color: #465467;
 
-    font-size: 10px;
+    font-size: 9px;
 
     text-align: right;
 }
 
-/* =========================================
+
+/* =========================================================
    RESPONSIVE
-========================================= */
+========================================================= */
 
 @media (max-width: 850px) {
 
     section {
-        padding: 80px 0;
+        padding: 82px 0;
     }
 
     .nav-links {
@@ -977,20 +1180,27 @@ footer {
     }
 
     .hero {
-        min-height: 850px;
+        min-height: 900px;
     }
 
-    .reflection {
-        height: 130px;
+    .brand-hero {
+        height: 350px;
     }
 
-    .wave {
-        width: 500px;
+    .brand-horizon {
+        top: 285px;
+    }
+
+    .brand-reflection {
+        top: 289px;
+    }
+
+    .hero h1 {
+        margin-top: -5px;
     }
 
     .footer-inner {
         flex-direction: column;
-
         align-items: flex-start;
     }
 
@@ -999,10 +1209,32 @@ footer {
     }
 }
 
+
 @media (max-width: 520px) {
 
     .container {
-        width: calc(100% - 28px);
+        width:
+            calc(100% - 28px);
+    }
+
+    .hero {
+        min-height: 850px;
+    }
+
+    .brand-hero {
+        height: 310px;
+    }
+
+    .brand-symbol {
+        width: 88vw;
+    }
+
+    .brand-horizon {
+        top: 245px;
+    }
+
+    .brand-reflection {
+        top: 249px;
     }
 
     .hero h1 {
@@ -1032,31 +1264,45 @@ footer {
 <body>
 
 
-<!-- =========================================
+<!-- =========================================================
      NAVIGATION
-========================================= -->
+========================================================= -->
 
 <nav>
 
     <div class="container nav-inner">
 
-        <a href="#top" class="nav-brand">
+        <a
+            href="#top"
+            class="nav-brand"
+        >
 
-            <span class="nav-symbol">Σ</span>
+            <span class="nav-symbol">
+                Σ
+            </span>
 
             SECOND SUN
 
         </a>
 
+
         <div class="nav-links">
 
-            <a href="#system">SYSTEM</a>
+            <a href="#system">
+                SYSTEM
+            </a>
 
-            <a href="#architecture">APPROACH</a>
+            <a href="#approach">
+                APPROACH
+            </a>
 
-            <a href="#cases">CASES</a>
+            <a href="#cases">
+                CASES
+            </a>
 
-            <a href="#contact">CONTACT</a>
+            <a href="#contact">
+                CONTACT
+            </a>
 
         </div>
 
@@ -1068,28 +1314,33 @@ footer {
 <main id="top">
 
 
-<!-- =========================================
+<!-- =========================================================
      HERO
-========================================= -->
+========================================================= -->
 
 <section class="hero">
 
     <div class="container hero-content">
 
-        <div class="logo-frame">
 
-            <img
-                src="Parallel System Second Sun.png"
-                alt="Parallel System Space — SECOND SUN"
-                onerror="
-                    this.style.display='none';
-                    document.querySelector('.logo-fallback').style.display='flex';
-                "
-            >
+        <div class="brand-hero">
 
-            <div class="logo-fallback">
-                ΣSS
+
+            <div class="brand-symbol">
+
+                <img
+                    src="Parallel System Second Sun.png"
+                    alt="SECOND SUN — Parallel System Space"
+                >
+
             </div>
+
+
+            <div class="brand-horizon"></div>
+
+
+            <div class="brand-reflection"></div>
+
 
         </div>
 
@@ -1116,45 +1367,49 @@ footer {
 
             <br><br>
 
-            <strong>SECOND SUN</strong> is designed as a
-            white-box system from the ground up.
+            <strong>
+                SECOND SUN
+            </strong>
+
+            is designed as a white-box system from the ground up.
 
         </div>
 
 
         <div class="hero-tags">
 
-            <span>Deterministic</span>
+            <span>
+                Deterministic
+            </span>
 
-            <span>Domain-Agnostic</span>
+            <span>
+                Domain-Independent
+            </span>
 
-            <span>Traceable</span>
+            <span>
+                Traceable
+            </span>
 
-            <span>Measurable</span>
+            <span>
+                Measurable
+            </span>
 
         </div>
 
-    </div>
-
-
-    <div class="reflection">
-
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
 
     </div>
 
 </section>
 
 
-<!-- =========================================
+<!-- =========================================================
      SYSTEM
-========================================= -->
+========================================================= -->
 
 <section id="system">
 
     <div class="container">
+
 
         <div class="section-header">
 
@@ -1162,18 +1417,24 @@ footer {
                 System Identity
             </div>
 
+
             <h2>
+
                 Structured evaluation
-                <span class="gradient-text">
-                    before escalation.
+                <span class="gradient">
+                    of complex systems.
                 </span>
+
             </h2>
 
+
             <p>
+
                 SECOND SUN provides a deterministic framework
                 for structuring complex systems, identifying
                 conflicts and evaluating operational states
-                without requiring the system to be redesigned.
+                across interconnected physical conditions.
+
             </p>
 
         </div>
@@ -1194,7 +1455,7 @@ footer {
 
                 <p>
                     Defined conditions, rules and measurable
-                    states provide traceable evaluation paths.
+                    states enable traceable evaluation.
                 </p>
 
             </article>
@@ -1212,8 +1473,8 @@ footer {
 
                 <p>
                     SECOND SUN enters systems at their current
-                    operational state rather than requiring
-                    complete reconstruction.
+                    operational state without requiring complete
+                    reconstruction.
                 </p>
 
             </article>
@@ -1222,11 +1483,11 @@ footer {
             <article class="system-card">
 
                 <div class="card-number">
-                    03 / CROSS-DOMAIN
+                    03 / ARCHITECTURE
                 </div>
 
                 <h3>
-                    Domain-agnostic architecture
+                    Domain-independent architecture
                 </h3>
 
                 <p>
@@ -1241,7 +1502,7 @@ footer {
             <article class="system-card">
 
                 <div class="card-number">
-                    04 / TRACEABLE
+                    04 / TRACEABILITY
                 </div>
 
                 <h3>
@@ -1249,9 +1510,9 @@ footer {
                 </h3>
 
                 <p>
-                    Identified conflicts can be connected to
-                    their relevant functions, interfaces,
-                    processes and environmental conditions.
+                    Identified conflicts can be traced back to
+                    the relevant functions, interfaces, processes
+                    and environmental conditions.
                 </p>
 
             </article>
@@ -1268,9 +1529,8 @@ footer {
                 </h3>
 
                 <p>
-                    Physical fields and system conditions can
-                    be associated with defined measurement
-                    principles.
+                    Physical fields and system states can be
+                    associated with defined measurement principles.
                 </p>
 
             </article>
@@ -1287,12 +1547,13 @@ footer {
                 </h3>
 
                 <p>
-                    The architecture is intended to operate
-                    upstream of existing engineering,
-                    infrastructure and operational environments.
+                    The architecture is designed to evaluate
+                    existing technical, infrastructure and
+                    operational systems at their current state.
                 </p>
 
             </article>
+
 
         </div>
 
@@ -1301,37 +1562,50 @@ footer {
 </section>
 
 
-<!-- =========================================
-     APPROACH
-========================================= -->
+<!-- =========================================================
+     CORE PRINCIPLE
+========================================================= -->
 
-<section id="architecture" class="principle">
+<section
+    id="approach"
+    class="principle"
+>
 
     <div class="container">
 
         <div class="principle-box">
 
+
             <div class="label">
                 Core Principle
             </div>
 
+
             <h2>
+
                 SECOND SUN enters systems
-                <span class="gradient-text">
+                <span class="gradient">
                     at their current operational state.
                 </span>
+
             </h2>
 
+
             <p>
+
                 The framework examines how functions,
                 interfaces, processes, materials and
                 environmental conditions interact within
                 an existing system.
+
                 <br><br>
+
                 The objective is not to replace engineering
                 systems, but to provide an additional
                 deterministic evaluation layer.
+
             </p>
+
 
         </div>
 
@@ -1340,30 +1614,39 @@ footer {
 </section>
 
 
-<!-- =========================================
+<!-- =========================================================
      CASE LIBRARY
-========================================= -->
+========================================================= -->
 
 <section id="cases">
 
     <div class="container">
 
+
         <div class="section-header">
 
             <div class="label">
-                Case Library
+                Infrastructure Case Library
             </div>
 
+
             <h2>
+
                 From individual conflicts
-                to system states.
+                <span class="gradient">
+                    to system states.
+                </span>
+
             </h2>
 
+
             <p>
+
                 Initial infrastructure cases demonstrate how
                 deterministic evaluation can structure
                 operational, environmental and degradation
                 conditions.
+
             </p>
 
         </div>
@@ -1386,9 +1669,11 @@ footer {
 
                 </div>
 
+
                 <h3>
                     Urban water distribution
                 </h3>
+
 
                 <p>
                     Structural evaluation of a layered freshwater
@@ -1396,12 +1681,24 @@ footer {
                     operational conditions.
                 </p>
 
+
                 <div class="case-meta">
 
-                    <span>PRESSURE</span>
-                    <span>LAYERS</span>
-                    <span>MATERIAL</span>
-                    <span>ENVIRONMENT</span>
+                    <span>
+                        PRESSURE
+                    </span>
+
+                    <span>
+                        LAYERS
+                    </span>
+
+                    <span>
+                        MATERIAL
+                    </span>
+
+                    <span>
+                        ENVIRONMENT
+                    </span>
 
                 </div>
 
@@ -1422,9 +1719,11 @@ footer {
 
                 </div>
 
+
                 <h3>
                     Pressure escalation
                 </h3>
+
 
                 <p>
                     Coupling between pressure transients,
@@ -1432,12 +1731,24 @@ footer {
                     operational load.
                 </p>
 
+
                 <div class="case-meta">
 
-                    <span>PRESSURE</span>
-                    <span>FATIGUE</span>
-                    <span>DRIFT</span>
-                    <span>ESCALATION</span>
+                    <span>
+                        PRESSURE
+                    </span>
+
+                    <span>
+                        FATIGUE
+                    </span>
+
+                    <span>
+                        DRIFT
+                    </span>
+
+                    <span>
+                        ESCALATION
+                    </span>
 
                 </div>
 
@@ -1458,21 +1769,35 @@ footer {
 
                 </div>
 
+
                 <h3>
                     Interface & contamination pathway
                 </h3>
+
 
                 <p>
                     Evaluation of coupled pressure,
                     interface and environmental conditions.
                 </p>
 
+
                 <div class="case-meta">
 
-                    <span>INTERFACE</span>
-                    <span>PRESSURE</span>
-                    <span>ENVIRONMENT</span>
-                    <span>COUPLING</span>
+                    <span>
+                        INTERFACE
+                    </span>
+
+                    <span>
+                        PRESSURE
+                    </span>
+
+                    <span>
+                        ENVIRONMENT
+                    </span>
+
+                    <span>
+                        COUPLING
+                    </span>
 
                 </div>
 
@@ -1493,9 +1818,11 @@ footer {
 
                 </div>
 
+
                 <h3>
                     Redundancy & isolation
                 </h3>
+
 
                 <p>
                     Evaluation of segment isolation,
@@ -1503,12 +1830,24 @@ footer {
                     under local disturbance conditions.
                 </p>
 
+
                 <div class="case-meta">
 
-                    <span>REDUNDANCY</span>
-                    <span>ISOLATION</span>
-                    <span>LOAD</span>
-                    <span>RESILIENCE</span>
+                    <span>
+                        REDUNDANCY
+                    </span>
+
+                    <span>
+                        ISOLATION
+                    </span>
+
+                    <span>
+                        LOAD
+                    </span>
+
+                    <span>
+                        RESILIENCE
+                    </span>
 
                 </div>
 
@@ -1522,13 +1861,14 @@ footer {
 </section>
 
 
-<!-- =========================================
+<!-- =========================================================
      POSITIONING
-========================================= -->
+========================================================= -->
 
 <section>
 
     <div class="container">
+
 
         <div class="section-header">
 
@@ -1536,15 +1876,24 @@ footer {
                 Positioning
             </div>
 
+
             <h2>
-                An additional engineering layer.
+
+                An additional
+                <span class="gradient">
+                    engineering layer.
+                </span>
+
             </h2>
 
+
             <p>
+
                 SECOND SUN is positioned as an independent
                 deterministic evaluation framework rather
                 than as a replacement for existing engineering
                 infrastructure.
+
             </p>
 
         </div>
@@ -1559,6 +1908,7 @@ footer {
                     SECOND SUN
                 </h3>
 
+
                 <ul>
 
                     <li>
@@ -1566,7 +1916,7 @@ footer {
                     </li>
 
                     <li>
-                        Conflict detection
+                        Conflict mapping
                     </li>
 
                     <li>
@@ -1595,6 +1945,7 @@ footer {
                 <h3 style="color:#8b99aa;">
                     Not positioned as
                 </h3>
+
 
                 <ul>
 
@@ -1634,9 +1985,9 @@ footer {
 </section>
 
 
-<!-- =========================================
+<!-- =========================================================
      IP PROTECTION
-========================================= -->
+========================================================= -->
 
 <section class="ip-section">
 
@@ -1644,17 +1995,22 @@ footer {
 
         <div class="ip-box">
 
+
             <h3>
                 Proprietary Methodology
             </h3>
 
+
             <p>
+
                 Selected validation structures, rule architectures
                 and evaluation methodologies remain proprietary.
                 Public material therefore presents principles,
                 application examples and observable outputs
                 without exposing the complete internal rule system.
+
             </p>
+
 
         </div>
 
@@ -1663,37 +2019,53 @@ footer {
 </section>
 
 
-<!-- =========================================
+<!-- =========================================================
      CONTACT
-========================================= -->
+========================================================= -->
 
-<section id="contact" class="contact">
+<section
+    id="contact"
+    class="contact"
+>
 
     <div class="container">
 
+
         <div class="contact-box">
+
 
             <div class="label">
                 Independent Research Initiative
             </div>
 
+
             <h2>
-                Open to technical evaluation.
+
+                Open to technical
+                <span class="gradient">
+                    evaluation.
+                </span>
+
             </h2>
 
+
             <p>
+
                 SECOND SUN is currently in an early evaluation
                 phase, with a focus on infrastructure systems,
                 operational-state assessment and deterministic
                 conflict analysis.
+
             </p>
 
+
             <a
-                class="contact-link"
                 href="mailto:a-stachowicz@gmx.de"
+                class="contact-link"
             >
                 TECHNICAL CONTACT
             </a>
+
 
         </div>
 
@@ -1705,21 +2077,24 @@ footer {
 </main>
 
 
-<!-- =========================================
+<!-- =========================================================
      FOOTER
-========================================= -->
+========================================================= -->
 
 <footer>
 
     <div class="container footer-inner">
 
+
         <div class="footer-brand">
             SECOND SUN · PARALLEL SYSTEM SPACE
         </div>
 
+
         <div class="footer-note">
             Independent System Architecture · 2026
         </div>
+
 
     </div>
 
