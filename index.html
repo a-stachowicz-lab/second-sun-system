@@ -1,269 +1,1223 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SECOND SUN – THE WHITE-BOX SYSTEM</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background: #04080f;
-      color: #d4dcec;
-      font-family: 'Courier New', monospace;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SECOND SUN — The White-Box System</title>
+
+<meta name="description"
+content="SECOND SUN — deterministic, domain-agnostic system architecture for validation, conflict detection and operational-state evaluation.">
+
+<style>
+:root {
+    --bg: #050a10;
+    --bg-soft: #08111a;
+    --panel: rgba(10, 20, 30, 0.82);
+    --panel-strong: rgba(13, 25, 37, 0.96);
+
+    --text: #d8e1eb;
+    --muted: #7d8da0;
+    --faint: #435264;
+
+    --cyan: #45e6ed;
+    --cyan-soft: rgba(69, 230, 237, .16);
+
+    --green: #42d99b;
+    --green-soft: rgba(66, 217, 155, .14);
+
+    --violet: #bca6ff;
+    --violet-soft: rgba(188, 166, 255, .13);
+
+    --red: #ff6478;
+    --yellow: #e8c86b;
+
+    --line: rgba(125, 160, 190, .16);
+
+    --radius: 18px;
+    --max: 1180px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(69,230,237,.07), transparent 34%),
+        radial-gradient(circle at 85% 35%, rgba(188,166,255,.045), transparent 30%),
+        var(--bg);
+    color: var(--text);
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    line-height: 1.65;
+}
+
+/* =========================
+   GLOBAL
+========================= */
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    width: min(calc(100% - 48px), var(--max));
+    margin: auto;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--cyan);
+    background: rgba(69,230,237,.045);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 12px rgba(66,217,155,.8);
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+section {
+    padding: 110px 0;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(125,160,190,.1);
+    background: rgba(5,10,16,.78);
+    backdrop-filter: blur(18px);
+}
+
+.nav-inner {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .22em;
+}
+
+.brand-mark {
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(69,230,237,.65);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--cyan);
+    font-size: 12px;
+    box-shadow: 0 0 18px rgba(69,230,237,.12);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: .08em;
+}
+
+.nav-links a {
+    transition: color .2s ease;
+}
+
+.nav-links a:hover {
+    color: var(--cyan);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 620px;
+    height: 620px;
+    border-radius: 50%;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    background:
+        radial-gradient(
+            circle,
+            rgba(69,230,237,.065),
+            transparent 64%
+        );
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+}
+
+.logo-placeholder {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(69,230,237,.5);
+    display: grid;
+    place-items: center;
+    color: var(--cyan);
+    font-size: 22px;
+    letter-spacing: -.12em;
+    box-shadow:
+        0 0 35px rgba(69,230,237,.08),
+        inset 0 0 25px rgba(69,230,237,.04);
+}
+
+.hero h1 {
+    margin-bottom: 12px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(48px, 8vw, 94px);
+    line-height: .95;
+    letter-spacing: .07em;
+    color: var(--violet);
+    text-shadow: 0 0 28px rgba(188,166,255,.09);
+}
+
+.hero-subtitle {
+    margin-bottom: 36px;
+    color: #7e91a8;
+    font-family: Georgia, serif;
+    font-size: clamp(14px, 2vw, 19px);
+    letter-spacing: .42em;
+    text-transform: uppercase;
+}
+
+.statement {
+    max-width: 760px;
+    margin: 0 auto 36px;
+    padding: 25px 30px;
+    text-align: left;
+    border-left: 2px solid var(--green);
+    background: linear-gradient(
+        90deg,
+        rgba(66,217,155,.055),
+        transparent
+    );
+    color: #aebdca;
+    font-family: Georgia, serif;
+    font-size: 16px;
+}
+
+.statement strong {
+    color: var(--green);
+}
+
+.hero-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 34px;
+}
+
+.hero-tags span {
+    color: #6d8094;
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.hero-tags span::before {
+    content: "◆";
+    margin-right: 8px;
+    color: var(--green);
+    font-size: 7px;
+}
+
+/* =========================
+   SECTION HEADERS
+========================= */
+
+.section-header {
+    max-width: 760px;
+    margin-bottom: 55px;
+}
+
+.section-header h2 {
+    margin: 18px 0 14px;
+    font-family: Georgia, serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    font-weight: 400;
+    color: #dce5ee;
+}
+
+.section-header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* =========================
+   CORE CARDS
+========================= */
+
+.core-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.card {
+    position: relative;
+    padding: 30px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,28,41,.9),
+            rgba(7,14,22,.85)
+        );
+    box-shadow: 0 18px 50px rgba(0,0,0,.18);
+    overflow: hidden;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 70px;
+    height: 1px;
+    background: var(--cyan);
+    opacity: .65;
+}
+
+.card-number {
+    color: var(--cyan);
+    font-family: monospace;
+    font-size: 12px;
+    letter-spacing: .14em;
+}
+
+.card h3 {
+    margin: 18px 0 8px;
+    color: #e3eaf1;
+    font-size: 20px;
+}
+
+.card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================
+   ARCHITECTURE
+========================= */
+
+.architecture {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(188,166,255,.045),
+            transparent 55%
+        );
+}
+
+.architecture-box {
+    padding: 48px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: rgba(7,14,22,.7);
+}
+
+.formula {
+    padding: 28px;
+    margin-bottom: 35px;
+    border: 1px solid rgba(69,230,237,.16);
+    border-radius: 14px;
+    background: rgba(69,230,237,.025);
+    text-align: center;
+    font-family: "Courier New", monospace;
+    font-size: clamp(16px, 3vw, 25px);
+    color: var(--cyan);
+    letter-spacing: .05em;
+}
+
+.layers {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.layer {
+    padding: 18px 12px;
+    text-align: center;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: rgba(255,255,255,.018);
+}
+
+.layer small {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--green);
+    font-family: monospace;
+    font-size: 11px;
+}
+
+.layer span {
+    color: #aab8c6;
+    font-size: 12px;
+}
+
+/* =========================
+   CASE LIBRARY
+========================= */
+
+.case-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.case {
+    min-height: 300px;
+    padding: 32px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--panel);
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background .25s ease;
+}
+
+.case:hover {
+    transform: translateY(-5px);
+    border-color: rgba(69,230,237,.35);
+    background: var(--panel-strong);
+}
+
+.case-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.case-id {
+    color: var(--cyan);
+    font-family: monospace;
+    font-size: 12px;
+    letter-spacing: .14em;
+}
+
+.case-status {
+    padding: 5px 9px;
+    border-radius: 999px;
+    color: var(--green);
+    border: 1px solid rgba(66,217,155,.22);
+    background: var(--green-soft);
+    font-family: monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+}
+
+.case h3 {
+    margin-bottom: 10px;
+    font-size: 23px;
+    font-weight: 500;
+}
+
+.case p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 26px;
+}
+
+.case-tags span {
+    padding: 5px 9px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: #73879b;
+    font-family: monospace;
+    font-size: 10px;
+}
+
+/* =========================
+   POSITIONING
+========================= */
+
+.positioning-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.positioning-card {
+    padding: 36px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+}
+
+.positioning-card.good {
+    border-color: rgba(66,217,155,.22);
+    background: linear-gradient(
+        145deg,
+        rgba(66,217,155,.055),
+        rgba(8,17,26,.7)
+    );
+}
+
+.positioning-card h3 {
+    margin-bottom: 24px;
+    color: var(--green);
+}
+
+.positioning-card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.positioning-card li {
+    position: relative;
+    padding: 10px 0 10px 22px;
+    color: #a4b2bf;
+    border-bottom: 1px solid rgba(125,160,190,.08);
+    font-size: 14px;
+}
+
+.positioning-card li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+}
+
+/* =========================
+   PRINCIPLE
+========================= */
+
+.principle {
+    text-align: center;
+}
+
+.principle-box {
+    max-width: 900px;
+    margin: auto;
+    padding: 65px 40px;
+    border-top: 1px solid rgba(188,166,255,.22);
+    border-bottom: 1px solid rgba(188,166,255,.22);
+}
+
+.principle-box h2 {
+    margin-bottom: 25px;
+    font-family: Georgia, serif;
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 400;
+    color: var(--violet);
+}
+
+.principle-box p {
+    margin: 0;
+    color: #8799ab;
+    font-size: 16px;
+}
+
+.principle-box strong {
+    color: var(--green);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 45px 0;
+    border-top: 1px solid var(--line);
+    color: #536477;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-brand {
+    color: #8191a2;
+    font-family: monospace;
+    font-size: 12px;
+    letter-spacing: .14em;
+}
+
+.footer-note {
+    font-size: 11px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 850px) {
+
+    section {
+        padding: 80px 0;
     }
 
-    /* LOGO – sanft leuchtend */
-    .logo {
-      text-align: center;
-      margin-bottom: 1.2rem;
-    }
-    .logo img {
-      max-width: 100%;
-      height: auto;
-      max-height: 140px;
-      filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.15));
+    .nav-links {
+        display: none;
     }
 
-    /* TITEL – mit Glanz */
-    h1 {
-      font-size: 3.8rem;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      color: #c4b5fd;
-      text-align: center;
-      line-height: 1;
-      text-shadow: 0 0 40px rgba(167, 139, 250, 0.08);
-    }
-    h1 small {
-      display: block;
-      font-size: 1.3rem;
-      font-weight: 300;
-      color: #7a8aa8;
-      letter-spacing: 0.35em;
-      margin-top: 0.2rem;
-      text-shadow: none;
-    }
-
-    /* TAGLINE – KEINE BOX mehr, nur Text mit einer Linie */
-    .tagline {
-      margin: 2rem 0 1.2rem 0;
-      padding-left: 1.5rem;
-      border-left: 3px solid #34d399;
-    }
-    .tagline p {
-      font-size: 1rem;
-      color: #a8b8d0;
-      line-height: 1.7;
-      max-width: 700px;
-    }
-    .tagline strong {
-      color: #34d399;
-      font-weight: 600;
-    }
-
-    /* DREI SÄULEN – OHNE Pillen, nur Text mit Abstand */
-    .pillars {
-      display: flex;
-      gap: 2.5rem;
-      font-size: 0.8rem;
-      color: #6a7a98;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin: 0.2rem 0 2.2rem 1.5rem;
-      flex-wrap: wrap;
-    }
-    .pillars span {
-      opacity: 0.8;
-    }
-    .pillars span::before {
-      content: "◆ ";
-      color: #34d399;
-      font-size: 0.5rem;
-      opacity: 0.6;
-    }
-
-    /* BILDER – FREI, ohne Kästchen, mit Tiefe */
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      margin: 1.8rem 0 1.2rem 0;
-    }
-    .grid-item {
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-    .grid-item img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 4px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(167, 139, 250, 0.08);
-      transition: all 0.4s ease;
-      display: block;
-      margin: 0 auto;
-    }
-    .grid-item img:hover {
-      box-shadow: 0 12px 48px rgba(167, 139, 250, 0.15);
-      border-color: rgba(167, 139, 250, 0.2);
-      transform: scale(1.005);
-    }
-    .grid-item .caption {
-      font-size: 0.8rem;
-      color: #34d399;
-      margin-top: 0.5rem;
-      letter-spacing: 0.08em;
-      font-weight: 500;
-    }
-    .grid-item .sub {
-      font-size: 0.65rem;
-      color: #4a5a78;
-      margin-top: 0.1rem;
-      letter-spacing: 0.05em;
-    }
-
-    /* BRÜCKE – eine einzige Zeile, kein Kasten */
-    .bridge {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #7a8aa8;
-      margin: 1.2rem 0 2rem 0;
-      letter-spacing: 0.05em;
-    }
-    .bridge strong {
-      color: #c4b5fd;
-      font-weight: 500;
-    }
-    .bridge em {
-      color: #34d399;
-      font-style: normal;
-      font-weight: 400;
-    }
-
-    /* NAME – mit Tiefe */
-    .name {
-      text-align: center;
-      font-size: 1.1rem;
-      color: #d4dcec;
-      letter-spacing: 0.06em;
-    }
-    .name span {
-      color: #6a7a98;
-      font-weight: 300;
-    }
-
-    /* FOOTER */
-    .footer {
-      margin-top: 3rem;
-      border-top: 1px solid rgba(167, 139, 250, 0.06);
-      padding-top: 1.2rem;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: #3a4a68;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .footer a {
-      color: #6a7a98;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer a:hover {
-      color: #c4b5fd;
-    }
-
-    /* MOBIL */
-    @media (max-width: 700px) {
-      .grid {
+    .core-grid,
+    .case-grid,
+    .positioning-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      h1 {
-        font-size: 2.6rem;
-      }
-      .logo img {
-        max-height: 100px;
-      }
-      .pillars {
-        gap: 0.8rem;
-        margin-left: 0;
-        justify-content: center;
-      }
-      .tagline {
-        padding-left: 0.8rem;
-      }
     }
-  </style>
+
+    .layers {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .architecture-box {
+        padding: 25px;
+    }
+
+    .statement {
+        padding: 20px;
+    }
+
+    .hero {
+        min-height: 80vh;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .container {
+        width: min(calc(100% - 28px), var(--max));
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .hero-subtitle {
+        letter-spacing: .22em;
+    }
+
+    .layers {
+        grid-template-columns: 1fr;
+    }
+
+    .card,
+    .case,
+    .positioning-card {
+        padding: 24px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-  <!-- LOGO -->
-  <div class="logo">
-    <img src="Parallel System Second Sun.png" alt="SSS Logo">
-  </div>
+<!-- =========================
+     NAVIGATION
+========================= -->
 
-  <!-- TITEL -->
-  <h1>
-    SECOND SUN
-    <small>THE WHITE-BOX SYSTEM</small>
-  </h1>
+<nav class="nav">
+    <div class="container nav-inner">
 
-  <!-- TAGLINE – ohne Box, nur Linie -->
-  <div class="tagline">
-    <p>
-      Andere nennen sich Whitebox, weil sie versuchen, ihre Blackboxen erklärbar zu machen.<br>
-      <strong>SECOND SUN</strong> ist eine Whitebox, weil es von Grund auf keine Blackbox ist.
-    </p>
-  </div>
+        <a href="#top" class="brand">
+            <span class="brand-mark">Σ</span>
+            SECOND SUN
+        </a>
 
-  <!-- DREI SÄULEN – ohne Pillen -->
-  <div class="pillars">
-    <span>Deterministisch</span>
-    <span>Domänenagnostisch</span>
-    <span>Nachvollziehbar</span>
-  </div>
+        <div class="nav-links">
+            <a href="#system">SYSTEM</a>
+            <a href="#architecture">ARCHITECTURE</a>
+            <a href="#cases">CASE LIBRARY</a>
+            <a href="#principle">PRINCIPLE</a>
+        </div>
 
-  <!-- BILDER – frei schwebend -->
-  <div class="grid">
-    <div class="grid-item">
-      <img src="SSS WASSERNETZ BILD.png" alt="Wassernetz">
-      <div class="caption">Wassernetz</div>
-      <div class="sub">Wasserinfrastruktur</div>
     </div>
-    <div class="grid-item">
-      <img src="SSS DROHNE SILIZIUM BILD.png" alt="Drohne Silizium-Anode">
-      <div class="caption">Drohne · Silizium-Anode</div>
-      <div class="sub">Luftfahrt & Materialien</div>
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<main id="top">
+
+<section class="hero">
+    <div class="container hero-content">
+
+        <div class="logo-placeholder">
+            ΣSS
+        </div>
+
+        <div class="eyebrow">
+            Independent System Architecture
+        </div>
+
+        <h1>SECOND SUN</h1>
+
+        <div class="hero-subtitle">
+            The White-Box System
+        </div>
+
+        <div class="statement">
+
+            Andere nennen sich Whitebox, weil sie versuchen,
+            ihre Blackboxen erklärbar zu machen.<br><br>
+
+            <strong>SECOND SUN</strong> ist eine Whitebox,
+            weil es von Grund auf keine Blackbox ist.
+
+        </div>
+
+        <div class="hero-tags">
+            <span>Deterministisch</span>
+            <span>Domänenagnostisch</span>
+            <span>Nachvollziehbar</span>
+            <span>Messbar</span>
+        </div>
+
     </div>
-  </div>
+</section>
 
-  <!-- BRÜCKE – nur Text -->
-  <div class="bridge">
-    <strong>Zwei Domänen.</strong> Ein Konflikt. <em>Eine Lösung.</em>
-  </div>
 
-  <!-- NAME -->
-  <div class="name">
-    Agnieszka Stachowicz <span>– Systemarchitektin</span>
-  </div>
+<!-- =========================
+     SYSTEM
+========================= -->
 
-  <!-- FOOTER -->
-  <div class="footer">
-    <span>✉️ <a href="mailto:a-stachowicz@gmx.de">a-stachowicz@gmx.de</a></span>
-    <span><a href="impressum.html">Impressum</a></span>
-  </div>
+<section id="system">
+    <div class="container">
+
+        <div class="section-header">
+            <div class="eyebrow">System Identity</div>
+
+            <h2>
+                Ein System zur strukturierten
+                Bewertung komplexer Zustände.
+            </h2>
+
+            <p>
+                SECOND SUN strukturiert Funktionen, Layer,
+                Materialien, Prozesse, Umweltbedingungen und
+                Konflikte innerhalb eines gemeinsamen
+                deterministischen Bewertungsrahmens.
+            </p>
+        </div>
+
+
+        <div class="core-grid">
+
+            <article class="card">
+                <div class="card-number">01 / CORE</div>
+
+                <h3>Deterministisch</h3>
+
+                <p>
+                    Zustände werden anhand definierter Regeln,
+                    Bedingungen und Schwellen bewertet —
+                    nicht durch probabilistische Blackbox-Logik.
+                </p>
+            </article>
+
+
+            <article class="card">
+                <div class="card-number">02 / STRUCTURE</div>
+
+                <h3>Domänenagnostisch</h3>
+
+                <p>
+                    Die Architektur kann auf unterschiedliche
+                    physikalische, technische und infrastrukturelle
+                    Systeme angewendet werden.
+                </p>
+            </article>
+
+
+            <article class="card">
+                <div class="card-number">03 / TRACEABILITY</div>
+
+                <h3>Nachvollziehbar</h3>
+
+                <p>
+                    Konflikte, Zustände und Übergänge bleiben
+                    strukturell rückverfolgbar und können über
+                    definierte Messprinzipien überprüft werden.
+                </p>
+            </article>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     ARCHITECTURE
+========================= -->
+
+<section id="architecture" class="architecture">
+    <div class="container">
+
+        <div class="section-header">
+            <div class="eyebrow">Core Architecture</div>
+
+            <h2>
+                Struktur vor Bewertung.
+            </h2>
+
+            <p>
+                Das System betrachtet ein reales System nicht
+                als isolierte Einzelkomponente, sondern als
+                gekoppelte Struktur aus Funktionen, Layern,
+                Materialien, Prozessen und Umweltbedingungen.
+            </p>
+        </div>
+
+
+        <div class="architecture-box">
+
+            <div class="formula">
+                S = (F, L, M, P, C, U, R)
+            </div>
+
+            <div class="layers">
+
+                <div class="layer">
+                    <small>F</small>
+                    <span>Funktionen</span>
+                </div>
+
+                <div class="layer">
+                    <small>L</small>
+                    <span>Layer</span>
+                </div>
+
+                <div class="layer">
+                    <small>M</small>
+                    <span>Materialien</span>
+                </div>
+
+                <div class="layer">
+                    <small>P</small>
+                    <span>Prozesse</span>
+                </div>
+
+                <div class="layer">
+                    <small>U</small>
+                    <span>Umwelt</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     CASE LIBRARY
+========================= -->
+
+<section id="cases">
+    <div class="container">
+
+        <div class="section-header">
+            <div class="eyebrow">Infrastructure Case Library</div>
+
+            <h2>
+                Von der Struktur zum operativen Zustand.
+            </h2>
+
+            <p>
+                Beispielhafte Anwendung der Architektur auf
+                komplexe Infrastrukturzustände.
+            </p>
+        </div>
+
+
+        <div class="case-grid">
+
+            <article class="case">
+
+                <div class="case-head">
+                    <span class="case-id">CASE W-01</span>
+                    <span class="case-status">VALID</span>
+                </div>
+
+                <h3>Normaler Betriebszustand</h3>
+
+                <p>
+                    Grundstruktur eines urbanen
+                    Wasserverteilungsnetzes unter nominalen
+                    Betriebsbedingungen.
+                </p>
+
+                <div class="case-tags">
+                    <span>SFL</span>
+                    <span>LAYER</span>
+                    <span>DRUCK</span>
+                    <span>UMWELT</span>
+                </div>
+
+            </article>
+
+
+            <article class="case">
+
+                <div class="case-head">
+                    <span class="case-id">CASE W-02</span>
+                    <span class="case-status">EVALUATION</span>
+                </div>
+
+                <h3>Druckeskalation</h3>
+
+                <p>
+                    Untersuchung gekoppelter Druck-, Material-
+                    und Alterungszustände innerhalb eines
+                    Verteilungsnetzes.
+                </p>
+
+                <div class="case-tags">
+                    <span>DRUCK</span>
+                    <span>ALTERUNG</span>
+                    <span>ERMÜDUNG</span>
+                    <span>ESKALATION</span>
+                </div>
+
+            </article>
+
+
+            <article class="case">
+
+                <div class="case-head">
+                    <span class="case-id">CASE W-03</span>
+                    <span class="case-status">EVALUATION</span>
+                </div>
+
+                <h3>Kontaminationseskalation</h3>
+
+                <p>
+                    Kopplung von Druckinstabilität,
+                    Grenzflächenzuständen und möglichen
+                    Eintrittspfaden.
+                </p>
+
+                <div class="case-tags">
+                    <span>GRENZFLÄCHE</span>
+                    <span>DRUCK</span>
+                    <span>UMWELT</span>
+                    <span>KOPPLUNG</span>
+                </div>
+
+            </article>
+
+
+            <article class="case">
+
+                <div class="case-head">
+                    <span class="case-id">CASE W-04</span>
+                    <span class="case-status">EVALUATION</span>
+                </div>
+
+                <h3>Redundanz & Isolation</h3>
+
+                <p>
+                    Bewertung von Segmenttrennung,
+                    Lastumlagerung und Redundanzreserven
+                    unter lokalen Ausfallbedingungen.
+                </p>
+
+                <div class="case-tags">
+                    <span>REDUNDANZ</span>
+                    <span>ISOLATION</span>
+                    <span>LAST</span>
+                    <span>RESILIENZ</span>
+                </div>
+
+            </article>
+
+
+            <article class="case">
+
+                <div class="case-head">
+                    <span class="case-id">CASE W-05</span>
+                    <span class="case-status">EVALUATION</span>
+                </div>
+
+                <h3>Alterung & Systemdrift</h3>
+
+                <p>
+                    Zeitabhängige Veränderung von Material-,
+                    Betriebs- und Stabilitätsparametern.
+                </p>
+
+                <div class="case-tags">
+                    <span>DRIFT</span>
+                    <span>ALTERUNG</span>
+                    <span>RESERVE</span>
+                    <span>ZEIT</span>
+                </div>
+
+            </article>
+
+
+            <article class="case">
+
+                <div class="case-head">
+                    <span class="case-id">CASE W-06</span>
+                    <span class="case-status">EVALUATION</span>
+                </div>
+
+                <h3>Umweltkopplung</h3>
+
+                <p>
+                    Bewertung der Wechselwirkung zwischen
+                    Feuchtigkeit, Temperatur, Bodenbedingungen
+                    und Infrastrukturzustand.
+                </p>
+
+                <div class="case-tags">
+                    <span>UMWELT</span>
+                    <span>FEUCHTE</span>
+                    <span>TEMPERATUR</span>
+                    <span>KORROSION</span>
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     POSITIONING
+========================= -->
+
+<section>
+    <div class="container">
+
+        <div class="section-header">
+            <div class="eyebrow">Positioning</div>
+
+            <h2>
+                Keine Blackbox.
+                Keine Neugestaltung des Systems.
+            </h2>
+
+            <p>
+                SECOND SUN ist als vorgelagerte technische
+                Bewertungsschicht konzipiert und kann bestehende
+                Systemstrukturen auf ihren aktuellen Zustand
+                untersuchen.
+            </p>
+        </div>
+
+
+        <div class="positioning-grid">
+
+            <article class="positioning-card good">
+
+                <h3>SECOND SUN</h3>
+
+                <ul>
+                    <li>deterministische Bewertung</li>
+                    <li>Konflikterkennung</li>
+                    <li>Operational-State-Evaluierung</li>
+                    <li>nachvollziehbare Regeln</li>
+                    <li>bestehende Infrastruktur integrierbar</li>
+                    <li>messbare Zustände</li>
+                </ul>
+
+            </article>
+
+
+            <article class="positioning-card">
+
+                <h3 style="color:#7d8da0;">
+                    Nicht das Ziel
+                </h3>
+
+                <ul>
+                    <li>keine generative KI</li>
+                    <li>keine Blackbox-Prognose</li>
+                    <li>kein vollständiger Systemneubau</li>
+                    <li>keine Simulation als Ersatz für Realität</li>
+                    <li>keine Optimierung um jeden Preis</li>
+                    <li>keine unprüfbaren Ergebnisse</li>
+                </ul>
+
+            </article>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     PRINCIPLE
+========================= -->
+
+<section id="principle" class="principle">
+
+    <div class="container">
+
+        <div class="principle-box">
+
+            <div class="eyebrow">Core Principle</div>
+
+            <h2>
+                SECOND SUN enters systems
+                at their current operational state.
+            </h2>
+
+            <p>
+                Die Architektur beginnt dort,
+                wo ein System tatsächlich steht —
+                nicht dort, wo es idealerweise neu entworfen
+                werden könnte.
+                <br><br>
+                <strong>
+                    Zwei Domänen. Ein Konflikt. Eine Lösung.
+                </strong>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="container footer-inner">
+
+        <div class="footer-brand">
+            SECOND SUN SYSTEM
+        </div>
+
+        <div class="footer-note">
+            Independent System Architecture · © 2026
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script>
+/*
+    SECOND SUN — minimal interaction layer
+
+    Keine externe Bibliothek.
+    Keine Tracking-Skripte.
+    Keine Abhängigkeiten.
+*/
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+    link.addEventListener("click", event => {
+
+        const target = document.querySelector(
+            link.getAttribute("href")
+        );
+
+        if (!target) return;
+
+        event.preventDefault();
+
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    });
+
+});
+</script>
 
 </body>
 </html>
