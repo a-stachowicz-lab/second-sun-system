@@ -5,140 +5,237 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SECOND SUN – THE WHITE-BOX SYSTEM</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       background: #0a0f1a;
       color: #e6ecff;
       font-family: 'Courier New', monospace;
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 2rem 1.5rem;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       justify-content: center;
     }
+    /* LOGO – größer & zentriert */
     .logo {
       text-align: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
     }
     .logo img {
       max-width: 100%;
       height: auto;
-      max-height: 120px;
-      border-radius: 4px;
+      max-height: 180px;
     }
+    /* TITEL */
     h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-weight: 700;
-      letter-spacing: -0.05em;
-      margin-bottom: 0.2rem;
+      letter-spacing: -0.03em;
       color: #22d3ee;
       text-align: center;
+      line-height: 1.1;
     }
     h1 small {
       display: block;
-      font-size: 1.2rem;
-      font-weight: 400;
+      font-size: 1.4rem;
+      font-weight: 300;
       color: #94a3b8;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.3em;
+      margin-top: 0.2rem;
     }
-    .tagline {
-      font-size: 1.1rem;
-      color: #8aa0c6;
-      border-left: 3px solid #22d3ee;
-      padding-left: 1rem;
+    /* TAGLINE – als Block mit Akzent */
+    .tagline-box {
+      background: #0f172a;
+      border-left: 4px solid #22d3ee;
+      padding: 1.2rem 1.5rem;
+      border-radius: 0 8px 8px 0;
       margin: 1.5rem 0;
     }
-    .tagline strong {
-      color: #e6ecff;
+    .tagline-box p {
+      font-size: 1.1rem;
+      color: #c8d6f0;
+      line-height: 1.6;
     }
+    .tagline-box strong {
+      color: #22d3ee;
+    }
+    /* DREI SÄULEN – als Abkürzung */
+    .pillars {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 0.9rem;
+      color: #8aa0c6;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin: 0.5rem 0 1.8rem 0;
+      flex-wrap: wrap;
+    }
+    .pillars span {
+      background: #0f172a;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      border: 1px solid #1e293b;
+    }
+    /* BILDER – mit Rahmen, Schatten, Text */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin: 2rem 0;
+      gap: 2rem;
+      margin: 1.5rem 0 1rem 0;
     }
     .grid-item {
       background: #0f172a;
       border: 1px solid #1e293b;
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 0.8rem;
       text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .grid-item:hover {
+      transform: scale(1.01);
+      border-color: #22d3ee;
     }
     .grid-item img {
       max-width: 100%;
       height: auto;
-      border-radius: 4px;
+      border-radius: 6px;
+      display: block;
+      margin: 0 auto;
     }
     .grid-item .caption {
-      font-size: 0.75rem;
+      font-size: 0.85rem;
+      color: #22d3ee;
+      margin-top: 0.5rem;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .grid-item .sub {
+      font-size: 0.7rem;
       color: #8aa0c6;
-      margin-top: 0.3rem;
+      margin-top: 0.1rem;
+    }
+    /* DIE BRÜCKE – Konflikt-Lösung */
+    .bridge {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #8aa0c6;
+      margin: 1rem 0 1.8rem 0;
+      padding: 0.8rem 1.5rem;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px dashed #22d3ee;
+    }
+    .bridge strong {
+      color: #22d3ee;
+    }
+    /* NAME */
+    .name {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #e6ecff;
       letter-spacing: 0.05em;
     }
+    .name span {
+      color: #8aa0c6;
+      font-weight: 300;
+    }
+    /* FOOTER */
     .footer {
-      margin-top: 2rem;
+      margin-top: 2.5rem;
       border-top: 1px solid #1e293b;
-      padding-top: 1rem;
+      padding-top: 1.2rem;
       display: flex;
       justify-content: space-between;
       font-size: 0.85rem;
       color: #475569;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
     .footer a {
       color: #8aa0c6;
       text-decoration: none;
+      transition: color 0.2s;
     }
     .footer a:hover {
       color: #22d3ee;
     }
+    /* MOBIL */
     @media (max-width: 700px) {
       .grid {
         grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      .logo img {
+        max-height: 120px;
+      }
+      .pillars {
+        gap: 0.8rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- LOGO – ganz oben -->
+  <!-- LOGO – JETZT GROSS -->
   <div class="logo">
-    <img src="Parallel System Second Sun.png" alt="SSS PARALLEL SYSTEMSPACE SYSTEM STRUCTURE SYNERGY">
+    <img src="Parallel System Second Sun.png" alt="SSS Logo">
   </div>
 
+  <!-- TITEL -->
   <h1>
     SECOND SUN
     <small>THE WHITE-BOX SYSTEM</small>
   </h1>
 
-  <div class="tagline">
-    Andere nennen sich Whitebox, weil sie versuchen, ihre Blackboxen erklärbar zu machen.<br>
-    <strong>SECOND SUN</strong> ist eine Whitebox, weil es von Grund auf keine Blackbox ist.
+  <!-- TAGLINE – als Box -->
+  <div class="tagline-box">
+    <p>
+      Andere nennen sich Whitebox, weil sie versuchen, ihre Blackboxen erklärbar zu machen.<br>
+      <strong>SECOND SUN</strong> ist eine Whitebox, weil es von Grund auf keine Blackbox ist.
+    </p>
   </div>
 
-  <p style="color:#8aa0c6; margin: 0.5rem 0 1rem 0;">
-    Deterministisch · Domänenagnostisch · Nachvollziehbar
-  </p>
+  <!-- DREI SÄULEN -->
+  <div class="pillars">
+    <span>Deterministisch</span>
+    <span>Domänenagnostisch</span>
+    <span>Nachvollziehbar</span>
+  </div>
 
+  <!-- ZWEI BILDER – mit Rahmen, Schatten, Unterschrift -->
   <div class="grid">
     <div class="grid-item">
-      <img src="SSS WASSERNETZ BILD.png" alt="Wassernetz – Konflikt gelöst">
+      <img src="SSS WASSERNETZ BILD.png" alt="Wassernetz – Systemlösung">
       <div class="caption">Wassernetz</div>
+      <div class="sub">Domäne: Wasserinfrastruktur</div>
     </div>
     <div class="grid-item">
-      <img src="SSS DROHNE SILIZIUM BILD.png" alt="Drohne und Silizium-Anode – gleicher Konflikt, gleiche Lösung">
+      <img src="SSS DROHNE SILIZIUM BILD.png" alt="Drohne & Silizium-Anode">
       <div class="caption">Drohne · Silizium-Anode</div>
+      <div class="sub">Domäne: Luftfahrt & Materialien</div>
     </div>
   </div>
 
-  <p style="font-weight: 300; font-size: 0.9rem; color: #8aa0c6; text-align: center; margin: 0.5rem 0 1.5rem 0;">
-    Zwei Domänen. Ein Konflikt. Eine Lösung.
-  </p>
+  <!-- BRÜCKE – Konflikt-Lösung -->
+  <div class="bridge">
+    <strong>Zwei Domänen.</strong> Ein Konflikt. <strong>Eine Lösung.</strong>
+  </div>
 
-  <p style="font-size: 1rem; color: #e6ecff; text-align: center;">
-    Agnieszka Stachowicz – Systemarchitektin
-  </p>
+  <!-- NAME -->
+  <div class="name">
+    Agnieszka Stachowicz <span>– Systemarchitektin</span>
+  </div>
 
+  <!-- FOOTER -->
   <div class="footer">
     <span>✉️ <a href="mailto:a-stachowicz@gmx.de">a-stachowicz@gmx.de</a></span>
     <span><a href="impressum.html">Impressum</a></span>
