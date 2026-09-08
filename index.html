@@ -11,174 +11,198 @@
       box-sizing: border-box;
     }
     body {
-      background: #050a14;  /* DUNKLER */
-      color: #e2e8f0;
+      background: #04080f;
+      color: #d4dcec;
       font-family: 'Courier New', monospace;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2rem;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
       justify-content: center;
     }
-    /* LOGO */
+
+    /* LOGO – sanft leuchtend */
     .logo {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
     .logo img {
       max-width: 100%;
       height: auto;
-      max-height: 180px;
+      max-height: 140px;
+      filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.15));
     }
-    /* TITEL – LILA */
+
+    /* TITEL – mit Glanz */
     h1 {
-      font-size: 3rem;
+      font-size: 3.8rem;
       font-weight: 700;
-      letter-spacing: -0.03em;
-      color: #A78BFA;  /* LILA */
+      letter-spacing: -0.04em;
+      color: #c4b5fd;
       text-align: center;
-      line-height: 1.1;
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(167, 139, 250, 0.08);
     }
     h1 small {
       display: block;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 300;
-      color: #94A3B8;  /* CHROM/SILBER */
-      letter-spacing: 0.3em;
+      color: #7a8aa8;
+      letter-spacing: 0.35em;
       margin-top: 0.2rem;
+      text-shadow: none;
     }
-    /* TAGLINE – mit GRÜNER Akzentlinie */
-    .tagline-box {
-      background: #0b1222;
-      border-left: 4px solid #34D399;  /* GRÜN */
-      padding: 1.2rem 1.5rem;
-      border-radius: 0 8px 8px 0;
-      margin: 1.5rem 0;
+
+    /* TAGLINE – KEINE BOX mehr, nur Text mit einer Linie */
+    .tagline {
+      margin: 2rem 0 1.2rem 0;
+      padding-left: 1.5rem;
+      border-left: 3px solid #34d399;
     }
-    .tagline-box p {
-      font-size: 1.1rem;
-      color: #cbd5e1;
-      line-height: 1.6;
+    .tagline p {
+      font-size: 1rem;
+      color: #a8b8d0;
+      line-height: 1.7;
+      max-width: 700px;
     }
-    .tagline-box strong {
-      color: #34D399;  /* GRÜN für Hervorhebungen */
+    .tagline strong {
+      color: #34d399;
+      font-weight: 600;
     }
-    /* DREI SÄULEN – CHROM/SILBER */
+
+    /* DREI SÄULEN – OHNE Pillen, nur Text mit Abstand */
     .pillars {
       display: flex;
-      justify-content: center;
-      gap: 2rem;
-      font-size: 0.9rem;
-      color: #94A3B8;
+      gap: 2.5rem;
+      font-size: 0.8rem;
+      color: #6a7a98;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      margin: 0.5rem 0 1.8rem 0;
+      letter-spacing: 0.2em;
+      margin: 0.2rem 0 2.2rem 1.5rem;
       flex-wrap: wrap;
     }
     .pillars span {
-      background: #0b1222;
-      padding: 0.3rem 1rem;
-      border-radius: 20px;
-      border: 1px solid #334155;  /* CHROM-Rahmen */
+      opacity: 0.8;
     }
-    /* BILDER – mit CHROM-Rahmen */
+    .pillars span::before {
+      content: "◆ ";
+      color: #34d399;
+      font-size: 0.5rem;
+      opacity: 0.6;
+    }
+
+    /* BILDER – FREI, ohne Kästchen, mit Tiefe */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin: 1.5rem 0 1rem 0;
+      gap: 2.5rem;
+      margin: 1.8rem 0 1.2rem 0;
     }
     .grid-item {
-      background: #0b1222;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 0.8rem;
       text-align: center;
-      transition: all 0.2s ease;
-    }
-    .grid-item:hover {
-      transform: scale(1.01);
-      border-color: #A78BFA;  /* LILA beim Darüberfahren */
+      transition: all 0.3s ease;
     }
     .grid-item img {
       max-width: 100%;
       height: auto;
-      border-radius: 6px;
+      border-radius: 4px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(167, 139, 250, 0.08);
+      transition: all 0.4s ease;
       display: block;
       margin: 0 auto;
     }
+    .grid-item img:hover {
+      box-shadow: 0 12px 48px rgba(167, 139, 250, 0.15);
+      border-color: rgba(167, 139, 250, 0.2);
+      transform: scale(1.005);
+    }
     .grid-item .caption {
-      font-size: 0.85rem;
-      color: #34D399;  /* GRÜN für Bildunterschriften */
+      font-size: 0.8rem;
+      color: #34d399;
       margin-top: 0.5rem;
-      letter-spacing: 0.05em;
-      font-weight: 600;
+      letter-spacing: 0.08em;
+      font-weight: 500;
     }
     .grid-item .sub {
-      font-size: 0.7rem;
-      color: #64748B;  /* DUNKLES CHROM */
+      font-size: 0.65rem;
+      color: #4a5a78;
       margin-top: 0.1rem;
+      letter-spacing: 0.05em;
     }
-    /* BRÜCKE – LILA + GRÜN */
+
+    /* BRÜCKE – eine einzige Zeile, kein Kasten */
     .bridge {
       text-align: center;
-      font-size: 0.95rem;
-      color: #94A3B8;
-      margin: 1rem 0 1.8rem 0;
-      padding: 0.8rem 1.5rem;
-      background: #0b1222;
-      border-radius: 8px;
-      border: 1px dashed #A78BFA;  /* LILA */
+      font-size: 0.9rem;
+      color: #7a8aa8;
+      margin: 1.2rem 0 2rem 0;
+      letter-spacing: 0.05em;
     }
     .bridge strong {
-      color: #A78BFA;  /* LILA für "Zwei Domänen" + "Eine Lösung" */
+      color: #c4b5fd;
+      font-weight: 500;
     }
-    /* NAME */
+    .bridge em {
+      color: #34d399;
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    /* NAME – mit Tiefe */
     .name {
       text-align: center;
       font-size: 1.1rem;
-      color: #e2e8f0;
-      letter-spacing: 0.05em;
+      color: #d4dcec;
+      letter-spacing: 0.06em;
     }
     .name span {
-      color: #94A3B8;
+      color: #6a7a98;
       font-weight: 300;
     }
+
     /* FOOTER */
     .footer {
-      margin-top: 2.5rem;
-      border-top: 1px solid #1e293b;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(167, 139, 250, 0.06);
       padding-top: 1.2rem;
       display: flex;
       justify-content: space-between;
-      font-size: 0.85rem;
-      color: #475569;
+      font-size: 0.8rem;
+      color: #3a4a68;
       flex-wrap: wrap;
       gap: 0.5rem;
     }
     .footer a {
-      color: #94A3B8;
+      color: #6a7a98;
       text-decoration: none;
       transition: color 0.2s;
     }
     .footer a:hover {
-      color: #A78BFA;  /* LILA beim Darüberfahren */
+      color: #c4b5fd;
     }
+
     /* MOBIL */
     @media (max-width: 700px) {
       .grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
       h1 {
-        font-size: 2.2rem;
+        font-size: 2.6rem;
       }
       .logo img {
-        max-height: 120px;
+        max-height: 100px;
       }
       .pillars {
         gap: 0.8rem;
+        margin-left: 0;
+        justify-content: center;
+      }
+      .tagline {
+        padding-left: 0.8rem;
       }
     }
   </style>
@@ -196,38 +220,38 @@
     <small>THE WHITE-BOX SYSTEM</small>
   </h1>
 
-  <!-- TAGLINE -->
-  <div class="tagline-box">
+  <!-- TAGLINE – ohne Box, nur Linie -->
+  <div class="tagline">
     <p>
       Andere nennen sich Whitebox, weil sie versuchen, ihre Blackboxen erklärbar zu machen.<br>
       <strong>SECOND SUN</strong> ist eine Whitebox, weil es von Grund auf keine Blackbox ist.
     </p>
   </div>
 
-  <!-- DREI SÄULEN -->
+  <!-- DREI SÄULEN – ohne Pillen -->
   <div class="pillars">
     <span>Deterministisch</span>
     <span>Domänenagnostisch</span>
     <span>Nachvollziehbar</span>
   </div>
 
-  <!-- BILDER -->
+  <!-- BILDER – frei schwebend -->
   <div class="grid">
     <div class="grid-item">
       <img src="SSS WASSERNETZ BILD.png" alt="Wassernetz">
       <div class="caption">Wassernetz</div>
-      <div class="sub">Domäne: Wasserinfrastruktur</div>
+      <div class="sub">Wasserinfrastruktur</div>
     </div>
     <div class="grid-item">
-      <img src="SSS DROHNE SILIZIUM BILD.png" alt="Drohne & Silizium-Anode">
+      <img src="SSS DROHNE SILIZIUM BILD.png" alt="Drohne Silizium-Anode">
       <div class="caption">Drohne · Silizium-Anode</div>
-      <div class="sub">Domäne: Luftfahrt & Materialien</div>
+      <div class="sub">Luftfahrt & Materialien</div>
     </div>
   </div>
 
-  <!-- BRÜCKE -->
+  <!-- BRÜCKE – nur Text -->
   <div class="bridge">
-    <strong>Zwei Domänen.</strong> Ein Konflikt. <strong>Eine Lösung.</strong>
+    <strong>Zwei Domänen.</strong> Ein Konflikt. <em>Eine Lösung.</em>
   </div>
 
   <!-- NAME -->
