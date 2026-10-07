@@ -1,40 +1,150 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THE WHITE-BOX SYSTEM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
+    <title>THE WHITE-BOX SYSTEM — PARALLEL SPACE</title>
 
-    h1 {
-      margin: 40px 20px 20px;
-      font-size: 32px;
-      letter-spacing: 4px;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    img {
-      display: block;
-      max-width: 90%;
-      height: auto;
-      margin: 40px auto;
-    }
-  </style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            color: #000000;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px 80px;
+        }
+
+        header {
+            margin-bottom: 70px;
+        }
+
+        .title {
+            font-size: clamp(32px, 5vw, 72px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: clamp(20px, 2.5vw, 36px);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            margin-top: 14px;
+        }
+
+        .signature {
+            margin-top: 35px;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 70px;
+        }
+
+        .images img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            border-top: 1px solid #000000;
+            padding-top: 22px;
+        }
+
+        nav a {
+            color: #000000;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 800px) {
+            main {
+                padding: 35px 20px 50px;
+            }
+
+            .images {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                margin-bottom: 45px;
+            }
+
+            nav {
+                gap: 18px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <h1>THE WHITE-BOX SYSTEM</h1>
+<main>
 
-  <img src="The%20WHITE%20BOX%20PARALLEL%20SPACE.png"
-       alt="THE WHITE-BOX SYSTEM">
+    <header>
+        <h1 class="title">THE WHITE-BOX SYSTEM</h1>
+        <div class="subtitle">PARALLEL SPACE</div>
+
+        <div class="signature">
+            AS-IS STATE → CONFLICT MAPPING → TRACEABLE PATH TRACKING
+        </div>
+    </header>
+
+    <section class="images">
+
+        <img
+            src="SSS%20PARALLEL.png"
+            alt="THE WHITE-BOX SYSTEM — PARALLEL SPACE"
+        >
+
+        <img
+            src="WHITE%20BLACK%20BOX.png"
+            alt="White Box / Black Box"
+        >
+
+    </section>
+
+    <nav>
+        <a href="system.html">System</a>
+        <a href="diagnosis.html">Diagnosis</a>
+        <a href="galvanic-matrix.html">Galvanic Matrix</a>
+        <a href="research.html">Research</a>
+        <a href="impressum.html">Impressum</a>
+    </nav>
+
+</main>
 
 </body>
 </html>
