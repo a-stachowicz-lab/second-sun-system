@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>System — The White-Box System</title>
+<style>
+  body {
+    margin: 0;
+    padding: 40px 20px;
+    background: #020817;
+    color: #e8e8e8;
+    font-family: Arial, sans-serif;
+    line-height: 1.7;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  h1 { font-size: 36px; letter-spacing: 2px; margin-bottom: 8px; }
+  h2 { font-size: 20px; letter-spacing: 1px; margin-top: 40px; color: #4fa3ff; }
+  p { font-size: 15px; color: #bbb; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; color: #bbb; }
+  .formula {
+    background: #0a1428;
+    border-left: 3px solid #4fa3ff;
+    padding: 14px 18px;
+    font-family: monospace;
+    font-size: 14px;
+    color: #8ecbff;
+    margin: 20px 0;
+  }
+  a { color: #4fa3ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
 
+  <h1>SYSTEM</h1>
+  <p>The White-Box System — deterministic architecture for system diagnosis.</p>
+
+  <h2>SCU — System Condition Unit</h2>
+  <p>Before any architecture is defined, one question is answered:</p>
+  <p><strong>Can the system exist at all?</strong></p>
+  <p>SCU defines the minimum existence conditions. Only if they are fulfilled, the architecture can be built.</p>
+
+  <h2>Architecture</h2>
+  <div class="formula">S = (G, F, L, M, P, C, U, R)</div>
+  <ul>
+    <li><strong>G</strong> — Geometry · Where?</li>
+    <li><strong>F</strong> — Function · For what?</li>
+    <li><strong>L</strong> — Limits · Under which boundaries?</li>
+    <li><strong>M</strong> — Medium · From what?</li>
+    <li><strong>P</strong> — Processes · Through what change?</li>
+    <li><strong>C</strong> — Conflict · What is incompatible?</li>
+    <li><strong>U</strong> — Environment · What acts exogenously?</li>
+    <li><strong>R</strong> — Rules · What is allowed?</li>
+  </ul>
+
+  <h2>Primitives</h2>
+  <div class="formula">D · K · Cd · E · Q · Rv · Rz · Sy · A · H+ · H- · I+ · I-</div>
+  <ul>
+    <li><strong>D</strong> — Drift</li>
+    <li><strong>K</strong> — Coupling Stress</li>
+    <li><strong>Cd</strong> — Conflict Density</li>
+    <li><strong>E</strong> — Escalation</li>
+    <li><strong>Q</strong> — Quarantine</li>
+    <li><strong>Rv</strong> — Reserve</li>
+    <li><strong>Rz</strong> — Reconstruction</li>
+    <li><strong>Sy</strong> — Synchronization</li>
+    <li><strong>A</strong> — Adaptivity</li>
+    <li><strong>H+ / H-</strong> — Memory</li>
+    <li><strong>I+ / I-</strong> — Information</li>
+  </ul>
+
+  <h2>Pipelines</h2>
+  <ul>
+    <li><strong>L1 — STOP</strong> · Not allowed. Terminate.</li>
+    <li><strong>L2 — CONFLICT</strong> · Conflict-bound. This is where the work happens.</li>
+    <li><strong>L3 — VALID</strong> · Stable. Allowed.</li>
+  </ul>
+
+  <h2>Meta-Fields</h2>
+  <ul>
+    <li><strong>Ω</strong> — Admissible state space</li>
+    <li><strong>Γ</strong> — Coupling matrix (asymmetric, directed)</li>
+    <li><strong>Σ</strong> — Stability ratio</li>
+    <li><strong>Φ = ln(Σ)</strong> — Stability potential</li>
+  </ul>
+
+  <h2>Core Statement</h2>
+  <p>Stability is created by architecture, not by compromise.</p>
+  <p><em>Identify. Decouple. Protect. Distribute. Stabilize.</em></p>
+
+  <p style="margin-top:60px;"><a href="index.html">← Back</a></p>
+
+</div>
+</body>
+</html>
